@@ -7,7 +7,7 @@ Build the Docker container with
 
 Run the Docker container with
 
-`docker run -p 8501:8501 speedest:latest`
+`docker run -p 80:8501 speedest:latest`
 
 The app can then be accessed at 
-[localhost:8501](http://localhost:8501)
+[localhost](http://localhost)
