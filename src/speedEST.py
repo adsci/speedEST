@@ -5,7 +5,7 @@ import pandas as pd
 with open('src/models/votingRegressor.pkl','rb') as f:
     vr = pickle.load(f)
 
-def predictSpeed(vr,user_query):
+def predictSpeed(vr,query):
     return vr.predict(query)[0]
     
 
@@ -21,11 +21,11 @@ npoles = st.slider('Choose the number of damaged guardrail poles', min_value=0, 
 nsegments = st.slider('Choose the number of damaged segments of the road barrier', min_value=0, max_value=24, step=1)
 
 feats=['vehicleMass','impactAngle','finalDisp','nPoles','damageLength']
-query = pd.DataFrame([[mass,angle,fdisp/1000,npoles,nsegments]],columns=feats)
+usr_query = pd.DataFrame([[mass,angle,fdisp/1000,npoles,nsegments]],columns=feats)
 
 clicked = st.button('Estimate vehicle speed')
 
 
 if clicked:
-    speed = predictSpeed(vr,query)
+    speed = predictSpeed(vr,usr_query)
     st.write('Estimated vehicle speed is ', speed, ' km/h' )
