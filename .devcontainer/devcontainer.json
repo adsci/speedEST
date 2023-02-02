@@ -1,0 +1,17 @@
+{
+	"name": "Existing Dockerfile",
+	// Sets the run context to one level up instead of the .devcontainer folder.
+	"context": "..",
+	"dockerFile": "../Dockerfile",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"eamodio.gitlens"
+			]
+		}
+	},
+
+	"postCreateCommand": "apt-get update && apt-get install -y git"
+}
