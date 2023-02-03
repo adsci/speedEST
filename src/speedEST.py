@@ -1,20 +1,19 @@
 import streamlit as st
-import pandas as pd
 import webbrowser
 from PIL import Image
 from pathlib import Path
 import utils
 
-
 vr = utils.loadVRModel()
+mlp = utils.loadMLPModel()
 projdesc_md = utils.splitMarkdown("src/project.md")
 
 
 with st.sidebar:
     st.write("# speedEST")
     selected_page = st.selectbox('Select Page ',
-        ('About the project', 'About the data', 'Voting Regressor model', 'Multilayer Perception model', 'Speed estimator'),
-        index=4)
+        ('Speed estimator', 'About the data', 'Voting Regressor model', 'Multilayer Perception model', 'About the project'),
+        index=0)
 
     if st.button('Github Page'):
         webbrowser.open_new_tab('https://github.com/adsci/speedEST')
@@ -33,19 +32,19 @@ elif selected_page == 'Speed estimator':
         ### Vehicle speed estimation at impact with a steel road barrier using Machine Learning
         """)
 
-    mass = st.number_input('Enter the mass of the vehicle', min_value=900.0, max_value=1800.0, step=1.0)
+    mass = st.number_input('Enter the mass of the vehicle', min_value=900.0, max_value=1800.0, value=1300., step=1.0)
     angle = st.slider('Choose the impact angle [in degrees]', min_value=4, max_value=30, value=15, step=1)
     fdisp = st.number_input('Enter the final displacement of the barrier [in mm]', min_value=6.0, max_value=1400.0, value=100.0, step=10.0)
     npoles = st.slider('Choose the number of damaged guardrail poles', min_value=0, max_value=11, step=1)
     nsegments = st.slider('Choose the number of damaged segments of the road barrier', min_value=0, max_value=6, step=1)
 
-    feats=['vehicleMass','impactAngle','finalDisp','nPoles','damageLength']
-    usr_query = pd.DataFrame([[mass,angle,fdisp/1000,npoles,nsegments*4]],columns=feats)
+    usr_query = [mass,angle,fdisp/1000,npoles,nsegments*4]
 
     clicked = st.button('Estimate vehicle speed')
 
-
     if clicked:
-        speed = utils.predictSpeedVR(vr,usr_query)
-        st.markdown(" ### Vehicle speed at impact is")
-        st.markdown(f"&emsp; :green[{speed:.2f}] km/h, according to :orange[**_Voting Regressor_**] model")
+        speedVR = utils.predictSpeedVR(usr_query, vr)
+        speedMLP = utils.predictSpeedMLP(usr_query, mlp)
+        st.markdown(" ### Vehicle speed at impact was")
+        st.markdown(f"&emsp; :green[{speedVR:.2f}] km/h, according to :orange[**_Voting Regressor_**] model")
+        st.markdown(f"&emsp; :green[{speedMLP:.2f}] km/h, according to :orange[**_Multilayer Perceptron_**] model")

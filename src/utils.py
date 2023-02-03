@@ -1,13 +1,29 @@
 import re
 import pickle
+import pandas as pd
+import torch
 
 def loadVRModel():
     with open('src/models/votingRegressor.pkl','rb') as f:
         vr = pickle.load(f)
     return vr
 
-def predictSpeedVR(vr,query):
-    return vr.predict(query)[0]
+def predictSpeedVR(query, vrModel, feats=['vehicleMass','impactAngle','finalDisp','nPoles','damageLength']):
+    query = pd.DataFrame([query],columns=feats)
+    return vrModel.predict(query)[0]
+
+def loadMLPModel():
+    mlp = torch.jit.load('src/models/multilayerPerceptron.pt')
+    mlp.eval()
+    return mlp
+
+def predictSpeedMLP(query, mlpModel):
+    query = torch.tensor(query)
+    normquery = mlpModel.normalizeFeatures(query)
+    with torch.inference_mode():
+        pred = mlpModel(normquery)
+
+    return mlpModel.recoverTargets(pred).item()
 
 def splitMarkdown(path):
     imgregex = re.compile(r"!\[Split\]\(.(.+)\)")
