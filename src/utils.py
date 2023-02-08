@@ -3,27 +3,20 @@ import pickle
 import pandas as pd
 import torch
 
-def loadVRModel():
-    with open('src/models/votingRegressor.pkl','rb') as f:
-        vr = pickle.load(f)
-    return vr
+def loadPickle(path):
+    with open(path,'rb') as f:
+        return pickle.load(f)
 
-def predictSpeedVR(query, vrModel, feats=['vehicleMass','impactAngle','finalDisp','nPoles','damageLength']):
-    query = pd.DataFrame([query],columns=feats)
-    return vrModel.predict(query)[0]
+def loadPandasPickle(path):
+    return pd.read_pickle(path)
+
+def loadVRModel():
+    return loadPickle('src/models/votingRegressor.pkl')
 
 def loadMLPModel():
     mlp = torch.jit.load('src/models/multilayerPerceptron.pt')
     mlp.eval()
     return mlp
-
-def predictSpeedMLP(query, mlpModel):
-    query = torch.tensor(query)
-    normquery = mlpModel.normalizeFeatures(query)
-    with torch.inference_mode():
-        pred = mlpModel(normquery)
-
-    return mlpModel.recoverTargets(pred).item()
 
 def splitMarkdown(path):
     imgregex = re.compile(r"!\[Split\]\(.(.+)\)")
@@ -31,12 +24,13 @@ def splitMarkdown(path):
         lines = f.read()
 
     imgpaths = re.findall(imgregex,lines)
-    parts = lines.split("![Split](.")
+    parts = lines.split("![Split")
 
     mdparts = []
     for part in parts:
         for imgpath in imgpaths:
-            part = part.replace(imgpath+')',"")
+            part = part.replace('](.' + imgpath+')\n',"")
+        part = part.replace('Here]()\n\n',"")
         mdparts.append(part)
 
     return mdparts, imgpaths

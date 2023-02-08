@@ -2,12 +2,8 @@ import streamlit as st
 import webbrowser
 from PIL import Image
 from pathlib import Path
-import utils
-
-vr = utils.loadVRModel()
-mlp = utils.loadMLPModel()
-projdesc_md = utils.splitMarkdown("src/project.md")
-
+import desc
+import models
 
 with st.sidebar:
     st.write("# speedEST")
@@ -23,10 +19,23 @@ with st.sidebar:
 
 
 if selected_page == 'About the project':
-    img = Image.open('src'+projdesc_md[1][0])
+    img = Image.open('src'+ desc.projdesc_md[1][0])
     st.image(img)
-    for paragraph in projdesc_md[0]:
+    for paragraph in desc.projdesc_md[0]:
         st.markdown(paragraph, unsafe_allow_html=True)
+elif selected_page == 'Voting Regressor model':
+    img = Image.open('src'+ desc.vrdesc_md[1][0])
+    st.markdown(desc.vrdesc_md[0][0], unsafe_allow_html=True)
+    st.image(img)
+    st.markdown(desc.vrdesc_md[0][1], unsafe_allow_html=True)
+    st.table(models.vr_metrics.style.format("{:.2f}"))
+    st.markdown(desc.vrdesc_md[0][2], unsafe_allow_html=True)
+    tab1, tab2 = st.tabs(["Histogram", "Density"])
+    with tab1:
+        st.altair_chart(models.vr_res, use_container_width=True)
+    with tab2:
+        st.altair_chart(models.vr_pdf, use_container_width=True)
+    st.markdown(desc.vrdesc_md[0][3], unsafe_allow_html=True)
 elif selected_page == 'Speed estimator':
     st.write("""
         ### Vehicle speed estimation at impact with a steel road barrier using Machine Learning
@@ -43,8 +52,8 @@ elif selected_page == 'Speed estimator':
     clicked = st.button('Estimate vehicle speed')
 
     if clicked:
-        speedVR = utils.predictSpeedVR(usr_query, vr)
-        speedMLP = utils.predictSpeedMLP(usr_query, mlp)
+        speedVR = models.predictSpeedVR(usr_query, models.vr)
+        speedMLP = models.predictSpeedMLP(usr_query, models.mlp)
         st.markdown(" ### Vehicle speed at impact was")
         st.markdown(f"&emsp; :green[{speedVR:.2f}] km/h, according to :orange[**_Voting Regressor_**] model")
         st.markdown(f"&emsp; :green[{speedMLP:.2f}] km/h, according to :orange[**_Multilayer Perceptron_**] model")
