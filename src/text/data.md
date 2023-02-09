@@ -3,5 +3,6 @@
 
 * type of barrier
 * FEM simulations 
-* database (+ plus train/test split)
+* database (253 cases, train/test split - 177/76)
+* train/val split (145/32)
 * feature description with pictures

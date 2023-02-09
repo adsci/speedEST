@@ -15,7 +15,7 @@ with st.sidebar:
         ('Speed estimator', 'Data', 'Voting Regressor model', 'Multilayer Perception model', 'About the project'),
         index=0)
 
-    if st.button('Github Page'):
+    if st.button('Source'):
         webbrowser.open_new_tab('https://github.com/adsci/speedEST')
 
     if st.button('CACM website'):
@@ -50,18 +50,23 @@ elif selected_page == 'Voting Regressor model':
 elif selected_page == 'Multilayer Perception model':
     st.markdown(text.mlpdesc_md[0][0], unsafe_allow_html=True)
     st.image('src' + text.mlpdesc_md[1][0])
+    st.markdown(text.mlpdesc_md[0][1], unsafe_allow_html=True)
     st.image('src' + text.mlpdesc_md[1][1])
-    st.table(models.mlp_metrics.style.format("{:.2f}"))
-    tab1, tab2, tab3, tab4 = st.tabs(["Histogram", "Density", "Loss", "Mean Absolute Error"])
+    st.markdown(text.mlpdesc_md[0][2], unsafe_allow_html=True)
+    tab1, tab2 = st.tabs(['Loss', 'Mean Absolute Error'])
     with tab1:
-        st.altair_chart(models.mlp_res, use_container_width=True)
-    with tab2:
-        st.altair_chart(models.mlp_pdf, use_container_width=True)
-    with tab3:
         st.altair_chart(models.mlp_loss, use_container_width=True)
-    with tab4:
+    with tab2:
         st.altair_chart(models.mlp_mae, use_container_width=True)
-    st.markdown(text.mlpdesc_md[0][-1], unsafe_allow_html=True)
+    st.markdown(text.mlpdesc_md[0][3], unsafe_allow_html=True)
+    st.table(models.mlp_metrics.style.format("{:.2f}"))
+    st.markdown(text.mlpdesc_md[0][4], unsafe_allow_html=True)
+    tab3, tab4 = st.tabs(["Histogram", "Density"])
+    with tab3:
+        st.altair_chart(models.mlp_res, use_container_width=True)
+    with tab4:
+        st.altair_chart(models.mlp_pdf, use_container_width=True)
+    st.markdown(text.mlpdesc_md[0][5], unsafe_allow_html=True)
 elif selected_page == 'Speed estimator':
     st.write("""
         ### Vehicle speed estimation at impact with a steel road barrier using Machine Learning

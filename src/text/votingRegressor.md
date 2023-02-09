@@ -66,7 +66,7 @@ In the following table, the values of the MAE for the training, validation and t
 ![SplitHere]()
 
 
-As can be seen in the table, the MAE (in km/h) and $R^2$ of the Voting Regressor model attains better values than for any individual voter. The histogram and probability distribution of the residuals (differences between the true target values and the predicted values) in the test set is presetented below. It can be seen that the error has an approximately Gaussian distribution.
+As can be seen in the table, the MAE (in km/h) and $R^2$ of the Voting Regressor model attains better values than for any individual voter. The histogram and probability distribution of the residuals (differences between the true and predicted values) in the test set are presetented below. It can be seen that the error has an approximately Gaussian distribution.
 
 ![SplitHere]()
 
