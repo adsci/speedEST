@@ -1,4 +1,4 @@
-![Split](./img/logo.png)
+![Split](../img/logo.png)
 
 # Methods for speed estimation of a vehicle at impact with a road safety barrier
 

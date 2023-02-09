@@ -19,7 +19,7 @@ def loadMLPModel():
     return mlp
 
 def splitMarkdown(path):
-    imgregex = re.compile(r"!\[Split\]\(.(.+)\)")
+    imgregex = re.compile(r"!\[Split\]\(..(.+)\)")
     with open(path,'r') as f:
         lines = f.read()
 
@@ -29,7 +29,7 @@ def splitMarkdown(path):
     mdparts = []
     for part in parts:
         for imgpath in imgpaths:
-            part = part.replace('](.' + imgpath+')\n',"")
+            part = part.replace('](..' + imgpath+')\n',"")
         part = part.replace('Here]()\n\n',"")
         mdparts.append(part)
 

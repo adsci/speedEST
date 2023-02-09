@@ -1,11 +1,11 @@
 # Voting Regressor model
 
 
-The Voting Regressor model [8] is an ensemble estimator that uses several base regressors and averages their prediction to form a final prediction. 
-This particular model includes an extremely randomised forest [1,2], gradient boosted regression trees [3,4], and an AdaBoost regressor [5,6,7]. 
+The Voting Regressor model [1] is an ensemble estimator that uses several base regressors and averages their prediction to form a final prediction. 
+This particular model includes an extremely randomised forest [2,3], gradient boosted regression trees [4,5], and an AdaBoost regressor [6,7,8]. 
 In the following, the base estimators are briefly introduced.
 
-![Split](./img/vrModel.png)
+![Split](../img/vrModel.png)
 
 As all voters are based on regression trees, it is noteworthy that the input data does not need to be normalised in order to successfully train this model.
 
@@ -72,18 +72,19 @@ As can be seen in the table, the MAE (in km/h) and $R^2$ of the Voting Regressor
 
 ## References
 
-1. Geurs, P. et al. (2006). Extremely Randomized Trees, *Machine Learning* 63(1), pp. 3-42
+1. `VotingRegressor`. scikit-learn documentation. https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.VotingRegressor.html
 
-2. `ExtraTreesRegressor`. scikit-learn documentation. https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html
+2. Geurs, P. et al. (2006). Extremely Randomized Trees, *Machine Learning* 63(1), pp. 3-42
 
-3. Friedman, J. H. (2001). Greedy function approximation: a gradient boosting machine. *Annals of statistics*, 1189-1232.
+3. `ExtraTreesRegressor`. scikit-learn documentation. https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html
 
-4. `GradientBoostingRegressor`. scikit-learn documentation. https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html
+4. Friedman, J. H. (2001). Greedy function approximation: a gradient boosting machine. *Annals of statistics*, 1189-1232.
 
-5. Freund, Y., Schapire, R. E. (1997). A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting. *Journal of Computer and System Sciences* 55(1), pp. 119-139
+5. `GradientBoostingRegressor`. scikit-learn documentation. https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html
 
-6. Drucker, H. (1997). Improving Regressors using Boosting Techniques. *International Conference on Machine Learning*.
+6. Freund, Y., Schapire, R. E. (1997). A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting. *Journal of Computer and System Sciences* 55(1), pp. 119-139
 
-7. `AdaBoostRegressor`. scikit-learn documentation. https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostRegressor.html
+7. Drucker, H. (1997). Improving Regressors using Boosting Techniques. *International Conference on Machine Learning*.
 
-8. `VotingRegressor`. scikit-learn documentation. https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.VotingRegressor.html
+8. `AdaBoostRegressor`. scikit-learn documentation. https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostRegressor.html
+
