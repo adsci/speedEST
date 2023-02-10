@@ -28,13 +28,25 @@ with st.sidebar:
     v_spacer(20)
     st.text("Copyright (c) 2023 \n Gdańsk University of Technology")
     st.text("Data acquisition by\n Dawid Bruski\n Łukasz Pachocki")
-    st.text("Models and app built by\n Adam Sciegaj")
+    st.text("Models and app by\n Adam Sciegaj")
     
 
 if selected_page == 'About the project':
     st.image('src' + text.projdesc_md[1][0])
     for paragraph in text.projdesc_md[0]:
         st.markdown(paragraph, unsafe_allow_html=True)
+elif selected_page == 'Data':
+    st.markdown(text.datadesc_md[0][0], unsafe_allow_html=True)
+    st.image('src' + text.datadesc_md[1][0])
+    st.markdown(text.datadesc_md[0][1], unsafe_allow_html=True)
+    st.image('src' + text.datadesc_md[1][1])
+    st.markdown(text.datadesc_md[0][2], unsafe_allow_html=True)
+    st.image('src' + text.datadesc_md[1][2])
+    st.markdown(text.datadesc_md[0][3], unsafe_allow_html=True)
+    st.image('src' + text.datadesc_md[1][3])
+    st.markdown(text.datadesc_md[0][4], unsafe_allow_html=True)
+    st.image('src' + text.datadesc_md[1][4])
+    st.markdown(text.datadesc_md[0][5], unsafe_allow_html=True)
 elif selected_page == 'Voting Regressor model':
     st.markdown(text.vrdesc_md[0][0], unsafe_allow_html=True)
     st.image('src' + text.vrdesc_md[1][0])
@@ -81,11 +93,11 @@ elif selected_page == 'Speed estimator':
         ### Vehicle speed estimation at impact with a steel road barrier using Machine Learning
         """)
 
-    mass = st.number_input('Enter the mass of the vehicle', min_value=900.0, max_value=1800.0, value=1300., step=1.0)
-    angle = st.slider('Choose the impact angle [in degrees]', min_value=4, max_value=30, value=15, step=1)
-    fdisp = st.number_input('Enter the final displacement of the barrier [in mm]', min_value=6.0, max_value=1400.0, value=100.0, step=10.0)
-    npoles = st.slider('Choose the number of damaged guardrail poles', min_value=0, max_value=11, step=1, value=2)
-    nsegments = st.slider('Choose the number of damaged segments of the road barrier', min_value=0, max_value=6, step=1, value = 1)
+    mass = st.number_input('Enter the mass of the vehicle, including the mass of occupants, [kg]', min_value=900.0, max_value=1800.0, value=1300., step=1.0)
+    angle = st.slider('Choose the impact angle [degrees]', min_value=4, max_value=30, value=15, step=1)
+    fdisp = st.number_input('Enter the final lateral displacement of the barrier (static working width) [mm]', min_value=6.0, max_value=1400.0, value=100.0, step=10.0)
+    npoles = st.slider('Choose the number of damaged guardrail posts', min_value=0, max_value=11, step=1, value=2)
+    nsegments = st.slider('Choose the number of damaged segments of the W-beam guardrails', min_value=0, max_value=6, step=1, value = 1)
 
     usr_query = [mass,angle,fdisp/1000,npoles,nsegments*4]
 
