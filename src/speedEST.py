@@ -1,6 +1,4 @@
 import streamlit as st
-import webbrowser
-from PIL import Image
 from pathlib import Path
 import text
 import models
@@ -9,21 +7,28 @@ def v_spacer(height) -> None:
     for _ in range(height):
         st.write('\n')
 
+def link_button(name,url):
+    html = f'''
+        <a target="_self" href={url}>
+            <button style="background-color: #969696; border: None; text-font: monospace">
+                {name}
+            </button>
+        </a>
+    '''
+    return html
+
 with st.sidebar:
     st.write("# speedEST")
     selected_page = st.selectbox('Select Page ',
         ('Speed estimator', 'Data', 'Voting Regressor model', 'Multilayer Perception model', 'Performance summary', 'About the project'),
         index=0)
 
-    if st.button('Source'):
-        webbrowser.open_new_tab('https://github.com/adsci/speedEST')
-
-    if st.button('CACM website'):
-        webbrowser.open_new_tab('https://wilis.pg.edu.pl/en/cacm')
-    
-    if st.button('KWM website'):
-        webbrowser.open_new_tab('https://wilis.pg.edu.pl/en/department-mechanics-materials-and-structures')
-
+    v_spacer(1)
+    st.write(link_button('Source','https://github.com/adsci/speedEST'),unsafe_allow_html=True)
+    v_spacer(1)
+    st.write(link_button('CACM website','https://wilis.pg.edu.pl/en/cacm'),unsafe_allow_html=True)
+    v_spacer(1)
+    st.write(link_button('KWM website','https://wilis.pg.edu.pl/en/department-mechanics-materials-and-structures'),unsafe_allow_html=True)
 
     v_spacer(20)
     st.text("Copyright (c) 2023 \n Gdańsk University of Technology")
