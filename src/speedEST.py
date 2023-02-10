@@ -12,7 +12,7 @@ def v_spacer(height) -> None:
 with st.sidebar:
     st.write("# speedEST")
     selected_page = st.selectbox('Select Page ',
-        ('Speed estimator', 'Data', 'Voting Regressor model', 'Multilayer Perception model', 'About the project'),
+        ('Speed estimator', 'Data', 'Voting Regressor model', 'Multilayer Perception model', 'Performance summary', 'About the project'),
         index=0)
 
     if st.button('Source'):
@@ -39,7 +39,7 @@ elif selected_page == 'Voting Regressor model':
     st.markdown(text.vrdesc_md[0][0], unsafe_allow_html=True)
     st.image('src' + text.vrdesc_md[1][0])
     st.markdown(text.vrdesc_md[0][1], unsafe_allow_html=True)
-    st.table(models.vr_metrics.style.format("{:.2f}"))
+    st.table(models.vr_metrics_all.style.format("{:.2f}"))
     st.markdown(text.vrdesc_md[0][2], unsafe_allow_html=True)
     tab1, tab2 = st.tabs(["Histogram", "Density"])
     with tab1:
@@ -67,6 +67,15 @@ elif selected_page == 'Multilayer Perception model':
     with tab4:
         st.altair_chart(models.mlp_pdf, use_container_width=True)
     st.markdown(text.mlpdesc_md[0][5], unsafe_allow_html=True)
+elif selected_page == 'Performance summary':
+    st.markdown(text.perfdesc_md[0][0], unsafe_allow_html=True)
+    st.table(models.metrics.style.format("{:.2f}"))
+    st.markdown(text.perfdesc_md[0][1], unsafe_allow_html=True)
+    tab1, tab2 = st.tabs(["Histogram","Density"])
+    with tab1:
+        st.altair_chart(models.res_summary, use_container_width=True)
+    with tab2:
+        st.altair_chart(models.pdf_summary, use_container_width=True)
 elif selected_page == 'Speed estimator':
     st.write("""
         ### Vehicle speed estimation at impact with a steel road barrier using Machine Learning
