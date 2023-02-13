@@ -5,7 +5,7 @@ The network is build of neurons rather than perceptron (which have threshold act
 
 As the number of input features is 5, there are 50 $\times$ 5 weights (and 50 biases) between the input and first hidden layer. For each neuron in the hidden layer, a weighted sum of the weights and input features is computed, and a non-linear activation function is used. In this model, the `LeakyReLU` function is considered for all hidden layers. In contrast to the classical `ReLU` activation function, the `LeakyReLU` functions allows for a small positive gradient also when the neuron is not active.
 
-The neurons in the hidden layers are fully-connected, which results in 50 $\times$ 30 weights (and 30 biases) needed for computing the outputs of the second hidden layer (in which the same activation function is used). In the end, $30$ weights (and $1$ bias) are needed to compute the final output, which is the impact speed.
+The neurons in the hidden layers are fully-connected, which results in 50 $\times$ 30 weights (and 30 biases) needed for computing the outputs of the second hidden layer (in which the same activation function is used). In the end, 30 weights (and 1 bias) are needed to compute the final output, which is the impact speed.
 
 Network architecture is schamitically depicted below, using the Netron tool [1].
 
@@ -25,7 +25,7 @@ In each training epoch (after the whole training set is iterated over to compute
 
 An important aspect of training neural networks is the feature normalisation. In contrast to models based on decision tree regressors, the input features (as well as the outputs) must be normalised.
 Normalisation ensures that features which originally have different scales, are of comparable values. This, in turn, speeds up the training and reduces the chanced to end up in a local minimum while minimizing the loss function.
-Because of this, the training and validation datasets are standardised such that each feature has z 0 mean and a standard deviation of 1, i.e., the standardised value (z-score) for feature $i$ is calculated as
+Because of this, the training and validation datasets are standardised such that each feature has a 0 mean and a standard deviation of 1, i.e., the standardised value (z-score) for feature $i$ is calculated as
 
 $x'_i = \dfrac{x_{i} - \mu}{\sqrt{\sigma^2}}$,
 
