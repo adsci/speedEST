@@ -74,15 +74,15 @@ As can be seen in the table, the MAE (in km/h) and $R^2$ of the Voting Regressor
 
 1. `VotingRegressor`. scikit-learn documentation. https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.VotingRegressor.html
 
-2. Geurs, P. et al. (2006). Extremely Randomized Trees, *Machine Learning* 63(1), pp. 3-42
+2. Geurts, P. et al. (2006). Extremely Randomized Trees, *Machine Learning* 63(1), pp. 3-42, https://doi.org/10.1007/s10994-006-6226-1
 
 3. `ExtraTreesRegressor`. scikit-learn documentation. https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html
 
-4. Friedman, J. H. (2001). Greedy function approximation: a gradient boosting machine. *Annals of statistics*, 1189-1232.
+4. Friedman, J. H. (2001). Greedy function approximation: a gradient boosting machine. *Annals of statistics*, 1189-1232, https://doi.org/10.1214/aos/1013203451
 
 5. `GradientBoostingRegressor`. scikit-learn documentation. https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html
 
-6. Freund, Y., Schapire, R. E. (1997). A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting. *Journal of Computer and System Sciences* 55(1), pp. 119-139
+6. Freund, Y., Schapire, R. E. (1997). A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting. *Journal of Computer and System Sciences* 55(1), pp. 119-139, https://doi.org/10.1006/jcss.1997.1504
 
 7. Drucker, H. (1997). Improving Regressors using Boosting Techniques. *International Conference on Machine Learning*.
 
