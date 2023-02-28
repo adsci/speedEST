@@ -11,12 +11,12 @@ As all voters are based on regression trees, it is noteworthy that the input dat
 
 ## Extremely randomised forest (`ExtraTreesRegressor`)
 
-The extremely randomised forest model is based on the classic random forest reggression model. In random forest, an enseble of regression trees is trained with bootstrap aggregating, i.e., every predictor is trained on a random subset of the training set, sampled with replacement. Each regression tree is then grown and the training set is split into regions, so that the mean squared error between the average and the targets within the region is minimised. When splitting a node during growth of the trees, classic random forest searches for the best feature among a random subset of features. After all trees have been trained, the forest can make predictions by averaging the predictions from all trees.
+The extremely randomised forest model is based on the classic random forest regression model. In random forest, an ensemble of regression trees is trained with bootstrap aggregating, i.e., every predictor is trained on a random subset of the training set, sampled with replacement. Each regression tree is then grown and the training set is split into subsets, so that the mean squared error between the average within each subset and the corresponding targets is minimised. When splitting a node during growth of the trees, classic random forest searches for the best feature among a random subset of features (e.g., one that reduces the variance the most). After all trees have been trained, the forest can make predictions by averaging the predictions from all trees.
 
-Extremely randomised forest takes this one step further. Unlike regular decision trees, which search for the best possible threshold for each feature while splitting the node, a random threshold for each feature is considered. This, along with using a random subset of features at node splitting results in even greater regressor diversity, trading higher bias for a lower variance. Furthermore, random thresholds also provide a speedup in training.
+Extremely randomised forest takes this approach one step further. Unlike regular decision trees, which search for the best possible threshold for each feature while splitting the node, a random threshold for each feature is considered. This, along with using a random subset of features at node splitting results in even greater regressor diversity, trading higher bias for a lower variance. Furthermore, random thresholds also provide a speedup in training.
 
-To build the model, the `ExtraTreesRegressor` class in `scikit-learn` was used. An optimal set of model hyperparameters was found using 5-fold randomised cross validation on the full training set including 177 training examples. In the course of cross-validation, the values of the hyperparamers used to train the model were repeteadly sampled from a predefined distribution.
-In the end, the optimal set was chosed as the one yielding the lowest mean squared error on the validation set.
+To build the model, the `ExtraTreesRegressor` class in `scikit-learn` was used. An optimal set of model hyperparameters was found using 5-fold randomised cross validation on the full training set including 177 training examples. In the course of cross-validation, the values of the hyperparamers used to train the model were repeatedly sampled from a predefined distribution.
+In the end, the optimal set was chosen as the one yielding the lowest mean squared error on the validation set.
 
 
 ## Gradient boosted regression trees (`GradientBoostingRegressor`)
@@ -25,16 +25,16 @@ The general idea of boosting methods is to sequentially train predictors, where 
 In this setting, a regression tree is used as the base regressor, and in each training stage, a new regression tree is fit on the negative gradient of the loss function (mean squared error).
 In the end, the ensemble prediction can be obtained as the sum of the prediction of all regressors.
 
-To build the model, the `GradientBoostingRegressor` class in `scikit-learn` was used. An optimal set of model hyperparameters was found using 5-fold randomised cross validation on the full training set including 177 training examples. In th course of cross-validation, the values of the hyperparamers used to train the model were repeteadly sampled from a predefined distribution.
-In the end, the optimal set was chosed as the one yielding the lowest mean squared error on the validation set.
+To build the model, the `GradientBoostingRegressor` class in `scikit-learn` was used. An optimal set of model hyperparameters was found using 5-fold randomised cross validation on the full training set including 177 training examples. In the course of cross-validation, the values of the hyperparamers used to train the model were repeatedly sampled from a predefined distribution.
+In the end, the optimal set was chosen as the one yielding the lowest mean squared error on the validation set.
 
 ## AdaBoost regressor (`AdaBoostRegressor`)
 
-Similar to the previous model, the AdaBoost (short for *Adaprive Boosting*) model trains regression trees sequentially so that each following predictor tries to correct its predecessor.
+Similar to the previous model, the AdaBoost (short for *Adaptive Boosting*) model trains regression trees sequentially so that each following predictor tries to correct its predecessor.
 In contrast to gradient boosting, AdaBoost adjusts the weights of the training examples according to the error of the current predictions. As a result, subsequent predictors focus more on  examples which are difficult to predict. The final prediction from the regressor is then obtained through a weighted sum of the predictions made by individual regressors.
 
-To build the model, the `AdaBoostRegressor` class in `scikit-learn` was used. An optimal set of model hyperparameters was found using 5-fold randomised cross validation on the full training set including 177 training examples. In th course of cross-validation, the values of the hyperparamers used to train the model were repeteadly sampled from a predefined distribution.
-In the end, the optimal set was chosed as the one yielding the lowest mean squared error on the validation set.
+To build the model, the `AdaBoostRegressor` class in `scikit-learn` was used. An optimal set of model hyperparameters was found using 5-fold randomised cross validation on the full training set including 177 training examples. In the course of cross-validation, the values of the hyperparamers used to train the model were repeatedly sampled from a predefined distribution.
+In the end, the optimal set was chosen as the one yielding the lowest mean squared error on the validation set.
 
 ## Voting regressor (`VotingRegressor`)
 
@@ -58,7 +58,7 @@ $R^2 = 1 - \dfrac{\sum_{i=1}^n ( y_i - \hat{y}_i)^2}{\sum_{i=1}^n ( y_i - \bar{y
 
 where $\bar{y} = \frac{1}{n} \sum_{i=1}^n y_i$ is the average target value.
 
-This score provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explaned by the model. 
+This score provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model. 
 The best possible $R^2$ score is $1.0$.
 
 In the following table, the values of the MAE for the training, validation and test set are summarised. The $R^2$ score on the test set is given as well.
@@ -66,7 +66,7 @@ In the following table, the values of the MAE for the training, validation and t
 ![SplitHere]()
 
 
-As can be seen in the table, the MAE (in km/h) and $R^2$ of the Voting Regressor model attains better values than for any individual voter. The histogram and probability distribution of the residuals (differences between the true and predicted values) in the test set are presetented below. It can be seen that the error has an approximately Gaussian distribution.
+As can be seen in the table, the MAE (in km/h) and $R^2$ of the Voting Regressor model attains better values than for any individual voter. The histogram and probability distribution of the residuals (differences between the true and predicted values) in the test set are presented below. It can be seen that the error has an approximately Gaussian distribution.
 
 ![SplitHere]()
 

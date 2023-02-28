@@ -7,7 +7,7 @@ As the number of input features is 5, there are 50 $\times$ 5 weights (and 50 bi
 
 The neurons in the hidden layers are fully-connected, which results in 50 $\times$ 30 weights (and 30 biases) needed for computing the outputs of the second hidden layer (in which the same activation function is used). In the end, 30 weights (and 1 bias) are needed to compute the final output, which is the impact speed.
 
-Network architecture is schamitically depicted below, using the Netron tool [1].
+Network architecture is schematically depicted below, using the Netron tool [1].
 
 ![Split](../img/mlpModel_netron.png)
 
@@ -24,7 +24,7 @@ In each training epoch (after the whole training set is iterated over to compute
 ## Feature normalisation
 
 An important aspect of training neural networks is the feature normalisation. In contrast to models based on decision tree regressors, the input features (as well as the outputs) must be normalised.
-Normalisation ensures that features which originally have different scales, are of comparable values. This, in turn, speeds up the training and reduces the chanced to end up in a local minimum while minimizing the loss function.
+Normalisation ensures that features which originally have different scales, are of comparable values. This, in turn, speeds up the training and reduces the chanced to end up in a local minimum while minimising the loss function.
 Because of this, the training and validation datasets are standardised such that each feature has a 0 mean and a standard deviation of 1, i.e., the standardised value (z-score) for feature $i$ is calculated as
 
 $x'_i = \dfrac{x_{i} - \mu}{\sqrt{\sigma^2}}$,
@@ -65,15 +65,15 @@ $R^2 = 1 - \dfrac{\sum_{i=1}^n ( y_i - \hat{y}_i)^2}{\sum_{i=1}^n ( y_i - \bar{y
 
 where $\bar{y} = \frac{1}{n} \sum_{i=1}^n y_i$ is the average target value.
 
-This score provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explaned by the model.
+This score provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model.
 The best possible $R^2$ score is $1.0$.
-Similar to the MAE, the *actual* predicted values arerecalculated from the z-scores before computation of the $R^2$ score.
+Similar to the MAE, the *actual* predicted values are recalculated from the z-scores before computation of the $R^2$ score.
 
 In the following table, the final values of the MAE (in km/h) for the training, validation and test sets are summarised. The $R^2$ score on the test set is given as well.
 
 ![SplitHere]()
 
-For completeness, the histogram and probability distribution of the residuals (differences between the true and predicted values) in the test set are presetented below. It can be seen that the error has an approximately Gaussian distribution.
+For completeness, the histogram and probability distribution of the residuals (differences between the true and predicted values) in the test set are presented below. It can be seen that the error has an approximately Gaussian distribution.
 
 ![SplitHere]()
 

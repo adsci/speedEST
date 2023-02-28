@@ -5,6 +5,6 @@ In addition, the $R^2$ score of the model on the test set is given.
 
 ![SplitHere]()
 
-For completeness, the histograms and probability distributions of the residuals (differences between the true and predicted values) in the test set are presetented below for both models.
+For completeness, the histograms and probability distributions of the residuals (differences between the true and predicted values) in the test set are presented below for both models.
 
 ![SplitHere]()
