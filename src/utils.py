@@ -11,13 +11,12 @@ def loadPickle(path):
 def loadPandasPickle(path):
     return pd.read_pickle(path)
 
-def loadTREModel():
-    return loadPickle('src/models/treeEnsemble.pkl')
 
-def loadMLPModel():
-    mlp = torch.jit.load('src/models/multilayerPerceptron.pt')
-    mlp.eval()
-    return mlp
+def loadRLEModel():
+    return loadPickle('src/models/regularizedLinearEnsemble.pkl')
+
+def loadSVEModel():
+    return loadPickle('src/models/supportVectorEnsemble.pkl')
 
 def splitMarkdown(path):
     imgregex = re.compile(r"!\[Split\]\(..(.+)\)")
