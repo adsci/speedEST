@@ -82,7 +82,7 @@ class MLP(MLModel):
     def getMAE(self):
         return self.mae
         
-    def predict(self, query):
+    def predict(self, query:list) -> float:
         query = torch.tensor(query)
         normquery = self.model.normalizeFeatures(query)
         with torch.inference_mode():
@@ -90,11 +90,49 @@ class MLP(MLModel):
         return self.model.recoverTargets(pred).item()
 
 
+class RLE(MLModel):
+    def __init__(self, path='src/models/regularizedLinearEnsemble.pkl'):
+        self.name = "Regularized Linear Ensemble"
+        self.abbr = "RLE"
+        modeldict = utils.loadPickle(path)
+        self.model = modeldict['rle']
+        self.scaler_x = modeldict['scaler_x']
+        self.scaler_y = modeldict['scaler_y']
+        self.metrics = utils.loadPandasPickle("src/models/rle_metrics.pkl")
+        self.residuals = utils.loadAndFlattenResiduals("src/models/rle_residuals.pkl")
+    
+    def predict(self, query:list) -> float:
+        feats = feats=['vehicleMass','impactAngle','finalDisp','nPoles','damageLength']
+        query = pd.DataFrame([query],columns=feats)
+        normquery = self.scaler_x.transform(query)
+        normpred = self.model.predict(normquery) 
+        pred = self.scaler_y.inverse_transform(normpred.reshape(-1,1)).flatten()
+        return pred[0]
+
+class SVE(MLModel):
+    def __init__(self, path='src/models/supportVectorEnsemble.pkl'):
+        self.name = "Support Vector Ensemble"
+        self.abbr = "SVE"
+        modeldict = utils.loadPickle(path)
+        self.model = modeldict['sve']
+        self.scaler_x = modeldict['scaler_x']
+        self.scaler_y = modeldict['scaler_y']
+        self.metrics = utils.loadPandasPickle("src/models/sve_metrics.pkl")
+        self.residuals = utils.loadAndFlattenResiduals("src/models/sve_residuals.pkl")
+    
+    def predict(self, query:list) -> float:
+        feats = feats=['vehicleMass','impactAngle','finalDisp','nPoles','damageLength']
+        query = pd.DataFrame([query],columns=feats)
+        normquery = self.scaler_x.transform(query)
+        normpred = self.model.predict(normquery) 
+        pred = self.scaler_y.inverse_transform(normpred.reshape(-1,1)).flatten()
+        return pred[0]  
+
+
 class FVE(MLModel):
-    def __init__(self, submodels):
-        self.name = "Final Voting Ensemble"
-        self.abbr = "FVE"
+    def __init__(self, submodels, weights):
         self.submodels = submodels
+        self.weights = weights
         self.baseest_cv = self.exctractValMetrics()
         self.metrics = utils.loadPandasPickle("src/models/fve_metrics.pkl")
         self.residuals = self.extractResiduals()
@@ -128,14 +166,20 @@ class FVE(MLModel):
     
     def getBaseEstCV(self):
         return self.baseest_cv
+    
+    def predict(self, query):
+        base_preds = [m.predict(query) for m in self.submodels]
+        ens_pred = 0
+        for p,w in zip(base_preds, self.weights):
+            ens_pred += p*w
+        return base_preds, ens_pred
 
     
 tre = TRE('src/models/treeEnsemble.pkl')
 mlp = MLP('src/models/multilayerPerceptron.pt')
-# ### Regularized Linear Ensemble model
-# rle = utils.loadRLEModel()
-# ### Support Vector Ensemble model
-# sve = utils.loadSVEModel()
+rle = RLE('src/models/regularizedLinearEnsemble.pkl')
+sve = SVE('src/models/supportVectorEnsemble.pkl')
 
-models = [tre, mlp]
-fve = FVE(models)
+models = [tre, rle, sve, mlp]
+w = [0.15, 0.05, 0.40, 0.40]
+fve = FVE(models, w)

@@ -111,9 +111,11 @@ elif selected_page == 'Speed estimator':
     clicked = st.button('Estimate vehicle speed')
 
     if clicked:
-        speedTRE = models.tre.predict(usr_query)
-        speedMLP = models.mlp.predict(usr_query)
-        # speedRLE = model.predictSpeedRLE(usr_query, models.rle)
-        st.markdown(" ### Vehicle speed at impact was")
-        st.markdown(f"&emsp; :green[{speedTRE:.2f}] km/h, according to :orange[**_Tree Ensemble_**] model")
-        st.markdown(f"&emsp; :green[{speedMLP:.2f}] km/h, according to :orange[**_Multilayer Perceptron_**] model")
+        basepreds, speedFVE = models.fve.predict(usr_query)
+        # st.markdown(" ### Vehicle speed at impact was")
+        # st.markdown(f"&emsp; :green[{speedTRE:.2f}] km/h, according to :orange[**_Tree Ensemble_**] model")
+        # st.markdown(f"&emsp; :green[{speedMLP:.2f}] km/h, according to :orange[**_Multilayer Perceptron_**] model")
+        # st.markdown(f"&emsp; :green[{speedRLE:.2f}] km/h, according to :orange[**_Regularized Linear Ensemble_**] model")
+        # st.markdown(f"&emsp; :green[{speedSVE:.2f}] km/h, according to :orange[**_Support Vector Ensemble_**] model")
+        st.write(basepreds)
+        st.write(speedFVE)

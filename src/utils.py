@@ -12,9 +12,6 @@ def loadPandasPickle(path):
     return pd.read_pickle(path)
 
 
-def loadRLEModel():
-    return loadPickle('src/models/regularizedLinearEnsemble.pkl')
-
 def loadSVEModel():
     return loadPickle('src/models/supportVectorEnsemble.pkl')
 
