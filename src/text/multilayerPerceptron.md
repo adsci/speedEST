@@ -1,6 +1,6 @@
 # Multilayer Perceptron model
 
-Multilayer Perceptron is a simple feedforward artificial neural network, in which all layers are fully-connected.
+Multilayer Perceptron is a simple feed-forward artificial neural network, in which all layers are fully-connected.
 The network is build of neurons rather than perceptron (which have threshold activation) and consists of the input layer, two hidden layers and the output layer. The first and the second hidden layers contain 50 and 30 neurons, respectively.
 
 As the number of input features is 5, there are 50 $\times$ 5 weights (and 50 biases) between the input and first hidden layer. For each neuron in the hidden layer, a weighted sum of the weights and input features is computed, and a non-linear activation function is used. In this model, the `LeakyReLU` function is considered for all hidden layers. In contrast to the classical `ReLU` activation function, the `LeakyReLU` functions allows for a small positive gradient also when the neuron is not active.
@@ -42,9 +42,9 @@ As a result, the actual value of the loss function is computed between the stand
 $\textrm{MSE} = \dfrac{1}{n} \sum_{i=1}^n (y'_i - \hat{y}'_i)^2$
 
 It is noteworthy that during inference, the validation and test sets are standardised with respect to the means and standard deviations of the *training* set.
-## Training
+## Training and performance metrics
 Training of the network continues for a predefined number of epochs, in this case the number of training epochs was set to 1000.
-After each epoch, the value of the loss function (MSE, standardised) is computed on both the training as well as on the validation set.
+After each epoch, the value of the loss function (MSE, standardised) was computed on both the training as well as on the validation set.
 Furthermore, the mean absolute error (MAE) between the target and predicted value was computed after each training epoch for the aforementioned datasets.
 The MAE can gives rough estimate of the mean error on the predicted value given by the model.
 The MAE is computed as
@@ -53,12 +53,6 @@ $\textrm{MAE} = \dfrac{\sum_{i=1}^n | y_i - \hat{y}_i |}{n}$,
 
 where $y_i$ denotes the target value, and $\hat{y}_i$ is the value predicted by the model. It is noteworthy that before computing the MAE the standardisation is reversed, i.e., the actual predicted values are computed from the predicted z-scores.
 
-Loss function value and the MAE for training and validations sets are plotted below.
-
-![SplitHere]()
-
-As seen in the graph, the loss on both the training and validation set is quickly decreasing (in spite of occasional fluctuations). This suggests that a minimum of the loss function has been found. Furthermore, the loss on the validation set follows the same trend and there is not much difference in model performance between these two sets, which signifies that the model is performing well.
-## Performance
 Another useful model performance metric is the coefficient of determination, called $R^2$, which can be computed as
 
 $R^2 = 1 - \dfrac{\sum_{i=1}^n ( y_i - \hat{y}_i)^2}{\sum_{i=1}^n ( y_i - \bar{y})^2}$,
@@ -69,12 +63,24 @@ This score provides a measure of how well observed outcomes are replicated by th
 The best possible $R^2$ score is $1.0$.
 Similar to the MAE, the *actual* predicted values are recalculated from the z-scores before computation of the $R^2$ score.
 
-In the following table, the final values of the MAE (in km/h) for the training, validation and test sets are summarised. The $R^2$ score on the test set is given as well.
+To evaluate model performance, the original training set (189 training examples), was repeatedly split into training and validation sets (157 and 32 examples, respectively). For each random split, the neural network was trained on the smaller training set. After training, the network made its predictions on the validation, and suitable metrics are computed. This process was repeated for 50 random splits of the full training set. 
+This way, by taking the mean and standard deviation of the MAE computed on the validation sets, an estimate of model performance on unseed data is obtained.
+
+Loss function value and the MAE for training and validations sets are plotted below. 
+Note that these are the mean values over all validation and training sets.
 
 ![SplitHere]()
 
-For completeness, the histogram and probability distribution of the residuals (differences between the true and predicted values) in the test set are presented below. It can be seen that the error has an approximately Gaussian distribution.
+As seen in the graph, the loss on both the training and validation set is quickly decreasing. This suggests that a minimum of the loss function has been found. Furthermore, the loss on the validation set follows the same trend and there is not much difference in model performance between these two sets, which signifies that the model is performing well. 
+Having obtained the metric estimated from cross-validation, the network is subsequently retrained on the full training set.
 
+In the following table, the final values of the MAE (in km/h) for the training, validation and test sets are summarised. The $R^2$ score on the test set is given as well. Note that the values for the validation set are in fact averaged over all validation sets.
+
+![SplitHere]()
+
+It is noteworthy that the error on the test and validation sets are quite close to each other, which mean that the model should perform well on unseen data. 
+
+The histogram and probability density distribution of the residuals (differences between the true and predicted values) in the validation set are presented below. Note that these are all residuals recorded in the course of cross-validation using 50 different random splits of the full training sets (a total of 1600 predictions). It can be seen that the speed residual has an approximately Gaussian distribution.
 ![SplitHere]()
 
 ## References

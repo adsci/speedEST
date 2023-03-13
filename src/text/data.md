@@ -43,8 +43,8 @@ The data was acquired in two ways: using finite element simulations as well as f
 
 ![Split](../img/vehicle.png)
 
-All in total, data from 253 crash tests (including real and numerical ones) was collected, the input features were extracted and the target speed values were recorded. The dataset was split into training and tests set, such that 177 examples were placed in the training set and the remaining 76 examples were used in test set. 
-For model training, an additional validation set of 32 examples was sampled from the training set (leaving 145 examples for model training).
+All in total, data from 253 crash tests (including real and numerical ones) was collected, the input features were extracted and the target speed values were recorded. The dataset was split into training and tests set, such that 189 examples (75%) were placed in the training set and the remaining 64 examples (25%) were used in test set. 
+
 
 ## References 
 

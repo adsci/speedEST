@@ -1,6 +1,7 @@
 import re
 import pickle
 import pandas as pd
+import numpy as np
 import torch
 
 def loadPickle(path):
@@ -10,8 +11,8 @@ def loadPickle(path):
 def loadPandasPickle(path):
     return pd.read_pickle(path)
 
-def loadVRModel():
-    return loadPickle('src/models/votingRegressor.pkl')
+def loadTREModel():
+    return loadPickle('src/models/treeEnsemble.pkl')
 
 def loadMLPModel():
     mlp = torch.jit.load('src/models/multilayerPerceptron.pt')
@@ -34,3 +35,12 @@ def splitMarkdown(path):
         mdparts.append(part)
 
     return mdparts, imgpaths
+
+def loadAndFlattenResiduals(path):
+    resdata = loadPickle(path)
+    encoding = {'residuals': 'Speed residual'}
+    for k, v in resdata.items():
+        if not isinstance(v, pd.DataFrame):
+            res_flattened = np.array(resdata['residuals']).flatten()
+            resdata[k] = pd.DataFrame(res_flattened, columns=[encoding[k]])
+    return resdata
