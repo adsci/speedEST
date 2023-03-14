@@ -162,9 +162,11 @@ class FVE(MLModel):
         return self.baseest_cv
     
     def predict(self, query):
-        base_preds = [m.predict(query) for m in self.submodels]
+        b_preds = [m.predict(query) for m in self.submodels]
+        base_preds = pd.DataFrame(b_preds,index=[m.getName() for m in self.submodels],columns=['Speed [km/h]'])
+        base_preds.index.name = 'Base predictor'
         ens_pred = 0
-        for p,w in zip(base_preds, self.weights):
+        for p,w in zip(b_preds, self.weights):
             ens_pred += p*w
         return base_preds, ens_pred
 
