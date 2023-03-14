@@ -1,43 +1,34 @@
 import streamlit as st
-from pathlib import Path
 import text
 import models
+import utils
 
 def v_spacer(height) -> None:
     for _ in range(height):
         st.write('\n')
 
-def link_button(name,url):
-    html = f'''
-        <a target="_self" href={url}>
-            <button style="background-color: #969696; border: None; text-font: monospace">
-                {name}
-            </button>
-        </a>
-    '''
-    return html
-
 with st.sidebar:
-    st.write("# speedEST")
+    st.image("src/img/logo.png")
     selected_page = st.selectbox('Select Page ',
-        ('Speed estimator', 'Data', 'Tree Ensemble', 'Multilayer Perception', 'Final Voting Ensemble', 'About the project'),
+        ('Speed estimator', 'Data', 'Tree Ensemble', 'Regularized Linear Ensemble', 
+         'Support Vector Ensemble', 'Multilayer Perception', 'Final Voting Ensemble', 'About the project'),
         index=0)
 
     v_spacer(1)
-    st.write(link_button('Source','https://github.com/adsci/speedEST'),unsafe_allow_html=True)
+    st.write(utils.link_button('Source','https://github.com/adsci/speedEST'),unsafe_allow_html=True)
     v_spacer(1)
-    st.write(link_button('CACM website','https://wilis.pg.edu.pl/en/cacm'),unsafe_allow_html=True)
+    st.write(utils.link_button('CACM website','https://wilis.pg.edu.pl/en/cacm'),unsafe_allow_html=True)
     v_spacer(1)
-    st.write(link_button('KWM website','https://wilis.pg.edu.pl/en/department-mechanics-materials-and-structures'),unsafe_allow_html=True)
+    st.write(utils.link_button('KWM website','https://wilis.pg.edu.pl/en/department-mechanics-materials-and-structures'),unsafe_allow_html=True)
 
-    v_spacer(20)
+    v_spacer(13)
     st.text("Copyright (c) 2023 \n Gdańsk University of Technology")
     st.text("Data acquisition by\n Dawid Bruski\n Łukasz Pachocki")
     st.text("Models and app by\n Adam Sciegaj")
     
 
 if selected_page == 'About the project':
-    st.image('src' + text.projdesc_md[1][0])
+    st.markdown("<p style='text-align: center; color: grey;'>"+ utils.img_to_html('src/img/logo.png',600)+"</p>", unsafe_allow_html=True)
     for paragraph in text.projdesc_md[0]:
         st.markdown(paragraph, unsafe_allow_html=True)
 elif selected_page == 'Data':
@@ -64,6 +55,18 @@ elif selected_page == 'Tree Ensemble':
     with tab2:
         st.altair_chart(models.tre.getResidualPDF(), use_container_width=True)
     st.markdown(text.tredesc_md[0][3], unsafe_allow_html=True)
+elif selected_page == 'Regularized Linear Ensemble':
+    st.markdown(text.rledesc_md[0][0], unsafe_allow_html=True)
+    st.image('src' + text.rledesc_md[1][0])
+    st.markdown(text.rledesc_md[0][1], unsafe_allow_html=True)
+    st.dataframe(models.rle.getMetrics().style.format("{:.3f}"))
+    st.markdown(text.rledesc_md[0][2], unsafe_allow_html=True)
+    tab1, tab2 = st.tabs(["Histogram", "Density"])
+    with tab1:
+        st.altair_chart(models.rle.getResidualHist(), use_container_width=True)
+    with tab2:
+        st.altair_chart(models.rle.getResidualPDF(), use_container_width=True)
+    st.markdown(text.rledesc_md[0][3], unsafe_allow_html=True)
 elif selected_page == 'Multilayer Perception':
     st.markdown(text.mlpdesc_md[0][0], unsafe_allow_html=True)
     st.image('src' + text.mlpdesc_md[1][0])
@@ -113,7 +116,7 @@ elif selected_page == 'Speed estimator':
     if clicked:
         col1, col2 = st.columns(2)
         basepreds, speedFVE = models.fve.predict(usr_query)
-        col1.markdown(" ### Vehicle speed at impact was")
+        col1.subheader("Vehicle speed at impact was")
         col1.markdown(f"&emsp; :green[{speedFVE:.2f}] km/h (:orange[**_Final Voting Ensemble_**])")
         col2.dataframe(basepreds.style.format("{:.2f}"))
 

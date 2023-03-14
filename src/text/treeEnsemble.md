@@ -2,20 +2,20 @@
 
 
 The Tree Ensemble model [1] is an ensemble estimator that uses several base regressors and averages their prediction to form a final prediction. 
-This particular model includes an extremely randomised forest [2,3], gradient boosted regression trees [4,5], and an AdaBoost regressor [6,7,8]. 
+This particular model includes an extremely randomized forest [2,3], gradient boosted regression trees [4,5], and an AdaBoost regressor [6,7,8]. 
 In the following, the base estimators are briefly introduced.
 
-![Split](../img/vrModel.png)
+![Split](../img/treModel.png)
 
 As all voters are based on regression trees, it is noteworthy that the input data does not need to be normalised in order to successfully train this model.
 
-## Extremely randomised forest (`ERF`)
+## Extremely randomized forest (`ERF`)
 
-The extremely randomised forest model is based on the classic random forest regression model. In random forest, an ensemble of regression trees is trained with bootstrap aggregating, i.e., every predictor is trained on a random subset of the training set, sampled with replacement. Each regression tree is then grown and the training set is split into subsets, so that the mean squared error between the average within each subset and the corresponding targets is minimised. When splitting a node during growth of the trees, classic random forest searches for the best feature among a random subset of features (e.g., one that reduces the variance the most). After all trees have been trained, the forest can make predictions by averaging the predictions from all trees.
+The extremely randomized forest model is based on the classic random forest regression model. In random forest, an ensemble of regression trees is trained with bootstrap aggregating, i.e., every predictor is trained on a random subset of the training set, sampled with replacement. Each regression tree is then grown and the training set is split into subsets, so that the mean squared error between the average within each subset and the corresponding targets is minimised. When splitting a node during growth of the trees, classic random forest searches for the best feature among a random subset of features (e.g., one that reduces the variance the most). After all trees have been trained, the forest can make predictions by averaging the predictions from all trees.
 
-Extremely randomised forest takes this approach one step further. Unlike regular decision trees, which search for the best possible threshold for each feature while splitting the node, a random threshold for each feature is considered. This, along with using a random subset of features at node splitting results in even greater regressor diversity, trading higher bias for a lower variance. Furthermore, random thresholds also provide a speed-up in training.
+Extremely randomized forest takes this approach one step further. Unlike regular decision trees, which search for the best possible threshold for each feature while splitting the node, a random threshold for each feature is considered. This, along with using a random subset of features at node splitting results in even greater regressor diversity, trading higher bias for a lower variance. Furthermore, random thresholds also provide a speed-up in training.
 
-To build the model, the `ExtraTreesRegressor` class in `scikit-learn` was used. An optimal set of model hyperparameters was found using randomised grid search with 5-fold cross-validation on the full training set including 189 training examples (using 20% of the training samples as validation set). In the course of cross-validation, the values of the hyperparameters used to train the model were repeatedly sampled from a predefined distribution.
+To build the model, the `ExtraTreesRegressor` class in `scikit-learn` was used. An optimal set of model hyperparameters was found using randomized grid search with 5-fold cross-validation on the full training set including 189 training examples (using 20% of the training samples as validation set). In the course of cross-validation, the values of the hyperparameters used to train the model were repeatedly sampled from a predefined distribution.
 In the end, the optimal set was chosen as the one yielding the lowest mean squared error on the validation set, and the model was retrained on the full training set for further use in voting ensemble.
 
 
@@ -25,7 +25,7 @@ The general idea of boosting methods is to sequentially train predictors, where 
 In this setting, a regression tree is used as the base regressor, and in each training stage, a new regression tree is fit on the negative gradient of the loss function (mean squared error).
 In the end, the ensemble prediction can be obtained as the sum of the prediction of all regressors.
 
-To build the model, the `GradientBoostingRegressor` class in `scikit-learn` was used. An optimal set of model hyperparameters was found using randomised grid search with 5-fold cross-validation on the full training set including 189 training examples (using 20% of the training samples as validation set). In the course of cross-validation, the values of the hyperparameters used to train the model were repeatedly sampled from a predefined distribution.
+To build the model, the `GradientBoostingRegressor` class in `scikit-learn` was used. An optimal set of model hyperparameters was found using randomized grid search with 5-fold cross-validation on the full training set including 189 training examples (using 20% of the training samples as validation set). In the course of cross-validation, the values of the hyperparameters used to train the model were repeatedly sampled from a predefined distribution.
 In the end, the optimal set was chosen as the one yielding the lowest mean squared error on the validation set, and the model was retrained on the full training set for further use in voting ensemble.
 
 ## Adaptive boosting of regression trees (`AdaBoost`)
@@ -33,7 +33,7 @@ In the end, the optimal set was chosen as the one yielding the lowest mean squar
 Similar to the previous model, the AdaBoost (short for *Adaptive Boosting*) model trains regression trees sequentially so that each following predictor tries to correct its predecessor.
 In contrast to gradient boosting, AdaBoost adjusts the weights of the training examples according to the error of the current predictions. As a result, subsequent predictors focus more on  examples which are difficult to predict. The final prediction from the regressor is then obtained through a weighted sum of the predictions made by individual regressors.
 
-To build the model, the `AdaBoostRegressor` class in `scikit-learn` was used. An optimal set of model hyperparameters was found using randomised grid search with 5-fold cross-validation on the full training set including 189 training examples (using 20% of the training samples as validation set). In the course of cross-validation, the values of the hyperparameters used to train the model were repeatedly sampled from a predefined distribution.
+To build the model, the `AdaBoostRegressor` class in `scikit-learn` was used. An optimal set of model hyperparameters was found using randomized grid search with 5-fold cross-validation on the full training set including 189 training examples (using 20% of the training samples as validation set). In the course of cross-validation, the values of the hyperparameters used to train the model were repeatedly sampled from a predefined distribution.
 In the end, the optimal set was chosen as the one yielding the lowest mean squared error on the validation set, and the model was retrained on the full training set for further use in voting ensemble.
 
 ## Tree Ensemble (`TRE`)

@@ -87,7 +87,7 @@ class MLP(MLModel):
 
 class RLE(MLModel):
     def __init__(self, modelpath='src/models/regularizedLinearEnsemble.pkl', metricpath='src/models/rle_metrics.pkl',
-                 residualpath='src/models/rle_residuals.pkl', histrange=[-36,36]):
+                 residualpath='src/models/rle_residuals.pkl', histrange=[-40,40]):
         super().__init__(modelpath, metricpath, residualpath, histrange)
         self.name = "Regularized Linear Ensemble"
         self.abbr = "RLE"
@@ -132,7 +132,7 @@ class FVE(MLModel):
         self.residuals = self.extractResiduals()
         self.pdfs = self.extractPDFs()
         self.resHist = alt.Chart(self.residuals).mark_bar(opacity=0.5).encode(
-                alt.X("Speed residual", bin=alt.Bin(extent=[-32,32],step=4)),
+                alt.X("Speed residual", bin=alt.Bin(extent=[-40,40],step=4)),
                 alt.Y('count()', stack=None), 
                 alt.Color("Model", scale=alt.Scale(domain=[m.getName() for m in self.submodels], range=['#4d96d9','#ff6b6b'])))
         self.resPDF = alt.Chart(self.pdfs).mark_line().encode(x='Speed residual',y='Density',
