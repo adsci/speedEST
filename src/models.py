@@ -103,6 +103,7 @@ class RLE(MLModel):
         pred = self.scaler_y.inverse_transform(normpred.reshape(-1,1)).flatten()
         return pred[0]
 
+
 class SVE(MLModel):
     def __init__(self, modelpath='src/models/supportVectorEnsemble.pkl', metricpath='src/models/sve_metrics.pkl',
                  residualpath='src/models/sve_residuals.pkl', histrange=[-24,24]):
@@ -133,9 +134,9 @@ class FVE(MLModel):
         self.resHist = alt.Chart(self.residuals).mark_bar(opacity=0.5).encode(
                 alt.X("Speed residual", bin=alt.Bin(extent=[-32,32],step=4)),
                 alt.Y('count()', stack=None), 
-                alt.Color("Model", scale=alt.Scale(domain=[m.getName() for m in models], range=['#4d96d9','#ff6b6b'])))
+                alt.Color("Model", scale=alt.Scale(domain=[m.getName() for m in self.submodels], range=['#4d96d9','#ff6b6b'])))
         self.resPDF = alt.Chart(self.pdfs).mark_line().encode(x='Speed residual',y='Density',
-                color=alt.Color("Model", scale=alt.Scale(domain=[m.getName() for m in models], range=['#4d96d9','#ff6b6b'])))
+                color=alt.Color("Model", scale=alt.Scale(domain=[m.getName() for m in self.submodels], range=['#4d96d9','#ff6b6b'])))
 
     def exctractValMetrics(self):
         metrics = [m.getMetrics() for m in self.submodels]
@@ -148,13 +149,13 @@ class FVE(MLModel):
     def extractResiduals(self):
         residuals_df = [m.getResiduals()['residuals'] for m in self.submodels]
         for i, df in enumerate(residuals_df):
-            residuals_df[i]['Model'] = models[i].getName()
+            residuals_df[i]['Model'] = self.submodels[i].getName()
         return pd.concat(residuals_df, axis=0)
     
     def extractPDFs(self):
         pdf_df = [m.getResiduals()['pdf_data'] for m in self.submodels]
         for i, df in enumerate(pdf_df):
-            pdf_df[i]['Model'] = models[i].getName()
+            pdf_df[i]['Model'] = self.submodels[i].getName()
         return pd.concat(pdf_df, axis=0)
     
     def getBaseEstCV(self):
@@ -167,7 +168,7 @@ class FVE(MLModel):
             ens_pred += p*w
         return base_preds, ens_pred
 
-models = (TRE(), RLE(), SVE(), MLP())
-tre, rle, sve, mlp = models
+
+tre, rle, sve, mlp = TRE(), RLE(), SVE(), MLP()
 w = [0.15, 0.05, 0.40, 0.40]
-fve = FVE(models, w)
+fve = FVE([tre, rle, sve, mlp], w)

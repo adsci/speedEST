@@ -11,10 +11,6 @@ def loadPickle(path):
 def loadPandasPickle(path):
     return pd.read_pickle(path)
 
-
-def loadSVEModel():
-    return loadPickle('src/models/supportVectorEnsemble.pkl')
-
 def splitMarkdown(path):
     imgregex = re.compile(r"!\[Split\]\(..(.+)\)")
     with open(path,'r') as f:
