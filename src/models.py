@@ -5,13 +5,20 @@ import utils
 
 class MLModel():
     #Abstract class for machine learning models, containing common functions
-    def __init__(self):
+    def __init__(self, modelpath, metricpath, residualpath, histrange):
         self.name = ""
         self.abbr = ""
-        self.metrics = []
-        self.residuals = []
-        self.resHist = []
-        self.resPDF = []
+        if modelpath.endswith('.pkl'):
+            self.model = utils.loadPickle(modelpath)
+        elif modelpath.endswith('.pt'):
+            self.model = torch.jit.load(modelpath)
+            self.model.eval()
+        self.metrics = utils.loadPandasPickle(metricpath)
+        self.residuals = utils.loadAndFlattenResiduals(residualpath)
+        self.resHist = alt.Chart(self.residuals['residuals']).mark_bar().encode(alt.X("Speed residual",
+                            bin=alt.Bin(extent=histrange,step=4)),y='count()').properties(title=self.name)
+        self.resPDF = alt.Chart(self.residuals['pdf_data']).mark_line().encode(x='Speed residual',
+                                                                               y='Density').properties(title=self.name)
 
     def getName(self):
         return self.name
@@ -33,16 +40,11 @@ class MLModel():
 
 
 class TRE(MLModel):
-    def __init__(self, path='src/models/treeEnsemble.pkl'):
+    def __init__(self, modelpath='src/models/treeEnsemble.pkl', metricpath='src/models/tre_metrics.pkl',
+                 residualpath='src/models/tre_residuals.pkl', histrange=[-32,32]):
+        super().__init__(modelpath, metricpath, residualpath, histrange)
         self.name = 'Tree Ensemble'
         self.abbr = 'TRE'
-        self.model = utils.loadPickle(path)
-        self.metrics = utils.loadPandasPickle("src/models/tre_metrics.pkl")
-        self.residuals = utils.loadAndFlattenResiduals("src/models/tre_residuals.pkl")
-        self.resHist = alt.Chart(self.residuals['residuals']).mark_bar().encode(alt.X("Speed residual",
-                            bin=alt.Bin(extent=[-32,32],step=4)),y='count()').properties(title=self.name)
-        self.resPDF = alt.Chart(self.residuals['pdf_data']).mark_line().encode(x='Speed residual',
-                                                                               y='Density').properties(title=self.name)
 
     def predict(self, query:list) -> float:
         feats = feats=['vehicleMass','impactAngle','finalDisp','nPoles','damageLength']
@@ -51,24 +53,17 @@ class TRE(MLModel):
 
 
 class MLP(MLModel):
-    def __init__(self, path='src/models/multilayerPerceptron.pt'):
+    def __init__(self, modelpath='src/models/multilayerPerceptron.pt', metricpath='src/models/mlp_metrics.pkl',
+                 residualpath='src/models/mlp_residuals.pkl', histrange=[-24,24]):
+        super().__init__(modelpath, metricpath, residualpath, histrange)
         self.name = 'Multilayer Perceptron'
         self.abbr = 'MLP'
-        self.model = torch.jit.load(path)
-        self.model.eval()
-        self.metrics = utils.loadPandasPickle("src/models/mlp_metrics.pkl")
-        self.residuals = utils.loadAndFlattenResiduals("src/models/mlp_residuals.pkl")
         self.training = utils.loadPickle("src/models/mlp_training.pkl")
         self.loss = alt.Chart(self.training['loss']).mark_line().encode(x='Epoch',y='Loss',
                     color=alt.Color("Dataset", scale=alt.Scale(domain=['Training (CV mean)','Validation (CV mean)'],range=['#4d96d9','#ff6b6b']))).properties(title=self.name)
         self.mae = alt.Chart(self.training['mae']).mark_line().encode(x='Epoch',y='Mean Absolute Error',
                             color=alt.Color("Dataset", scale=alt.Scale(domain=['Training (CV mean)',
                                 'Validation (CV mean)'],range=['#4d96d9','#ff6b6b']))).properties(title=self.name)
-        self.resHist = alt.Chart(self.residuals['residuals']).mark_bar().encode(
-                            alt.X("Speed residual", bin=alt.Bin(extent=[-24,24],step=4)),
-                            y='count()').properties(title=self.name)
-        self.resPDF = alt.Chart(self.residuals['pdf_data']).mark_line().encode(x='Speed residual',
-                                                                               y='Density').properties(title=self.name)
 
     def getMetrics(self):
         return self.metrics.rename(columns={self.name: self.abbr})
@@ -91,15 +86,14 @@ class MLP(MLModel):
 
 
 class RLE(MLModel):
-    def __init__(self, path='src/models/regularizedLinearEnsemble.pkl'):
+    def __init__(self, modelpath='src/models/regularizedLinearEnsemble.pkl', metricpath='src/models/rle_metrics.pkl',
+                 residualpath='src/models/rle_residuals.pkl', histrange=[-36,36]):
+        super().__init__(modelpath, metricpath, residualpath, histrange)
         self.name = "Regularized Linear Ensemble"
         self.abbr = "RLE"
-        modeldict = utils.loadPickle(path)
-        self.model = modeldict['rle']
-        self.scaler_x = modeldict['scaler_x']
-        self.scaler_y = modeldict['scaler_y']
-        self.metrics = utils.loadPandasPickle("src/models/rle_metrics.pkl")
-        self.residuals = utils.loadAndFlattenResiduals("src/models/rle_residuals.pkl")
+        self.scaler_x = self.model['scaler_x']
+        self.scaler_y = self.model['scaler_y']
+        self.model = self.model['rle']
     
     def predict(self, query:list) -> float:
         feats = feats=['vehicleMass','impactAngle','finalDisp','nPoles','damageLength']
@@ -110,15 +104,14 @@ class RLE(MLModel):
         return pred[0]
 
 class SVE(MLModel):
-    def __init__(self, path='src/models/supportVectorEnsemble.pkl'):
+    def __init__(self, modelpath='src/models/supportVectorEnsemble.pkl', metricpath='src/models/sve_metrics.pkl',
+                 residualpath='src/models/sve_residuals.pkl', histrange=[-24,24]):
+        super().__init__(modelpath, metricpath, residualpath, histrange)
         self.name = "Support Vector Ensemble"
         self.abbr = "SVE"
-        modeldict = utils.loadPickle(path)
-        self.model = modeldict['sve']
-        self.scaler_x = modeldict['scaler_x']
-        self.scaler_y = modeldict['scaler_y']
-        self.metrics = utils.loadPandasPickle("src/models/sve_metrics.pkl")
-        self.residuals = utils.loadAndFlattenResiduals("src/models/sve_residuals.pkl")
+        self.scaler_x = self.model['scaler_x']
+        self.scaler_y = self.model['scaler_y']
+        self.model = self.model['sve']
     
     def predict(self, query:list) -> float:
         feats = feats=['vehicleMass','impactAngle','finalDisp','nPoles','damageLength']
@@ -174,12 +167,7 @@ class FVE(MLModel):
             ens_pred += p*w
         return base_preds, ens_pred
 
-    
-tre = TRE('src/models/treeEnsemble.pkl')
-mlp = MLP('src/models/multilayerPerceptron.pt')
-rle = RLE('src/models/regularizedLinearEnsemble.pkl')
-sve = SVE('src/models/supportVectorEnsemble.pkl')
-
-models = [tre, rle, sve, mlp]
+models = (TRE(), RLE(), SVE(), MLP())
+tre, rle, sve, mlp = models
 w = [0.15, 0.05, 0.40, 0.40]
 fve = FVE(models, w)
