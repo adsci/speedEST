@@ -103,10 +103,15 @@ elif selected_page == 'Final Voting Ensemble':
     st.markdown(text.fvedesc_md[0][0], unsafe_allow_html=True)
     st.dataframe(models.fve.getBaseEstCV().style.format("{:.3f}"))
     st.markdown(text.fvedesc_md[0][1], unsafe_allow_html=True)
-    tab1, tab2 = st.tabs(["Histogram","Density"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Histogram - Base Estimators","Density - Base Estimators",
+                                       "Histogram - Ensemble", "Density - Ensemble"])
     with tab1:
-        st.altair_chart(models.fve.getResidualHist(), use_container_width=True)
+        st.altair_chart(models.fve.getBaseResidualHist(), use_container_width=True)
     with tab2:
+        st.altair_chart(models.fve.getBaseResidualPDF(), use_container_width=True)
+    with tab3:
+        st.altair_chart(models.fve.getResidualHist(), use_container_width=True)
+    with tab4:
         st.altair_chart(models.fve.getResidualPDF(), use_container_width=True)
     st.markdown(text.fvedesc_md[0][2], unsafe_allow_html=True)
     st.dataframe(models.fve.getMetrics().style.format("{:.3f}"))
@@ -115,7 +120,7 @@ elif selected_page == 'Speed estimator':
         ### Vehicle speed estimation at impact with a steel road barrier using Machine Learning
         """)
 
-    mass = st.number_input('Enter the mass of the vehicle, including the mass of occupants, [kg]', min_value=900.0, max_value=1800.0, value=1300., step=1.0)
+    mass = st.number_input('Enter the mass of the vehicle, including the mass of occupants [kg]', min_value=900.0, max_value=1800.0, value=1300., step=1.0)
     angle = st.slider('Choose the impact angle [degrees]', min_value=4, max_value=30, value=15, step=1)
     fdisp = st.number_input('Enter the final lateral displacement of the barrier (static working width) [mm]', min_value=6.0, max_value=1400.0, value=100.0, step=10.0)
     npoles = st.slider('Choose the number of damaged guardrail posts', min_value=0, max_value=11, step=1, value=2)

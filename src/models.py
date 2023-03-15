@@ -125,18 +125,23 @@ class SVE(MLModel):
 
 class FVE(MLModel):
     def __init__(self, submodels, weights):
+        self.name = 'Final Voting Regressor'
+        self.abbr = 'FVE'
         self.submodels = submodels
         self.weights = weights
         self.baseest_cv = self.exctractValMetrics()
         self.metrics = utils.loadPandasPickle("src/models/fve_metrics.pkl")
-        self.residuals = self.extractResiduals()
-        self.pdfs = self.extractPDFs()
-        self.resHist = alt.Chart(self.residuals).mark_bar(opacity=0.5).encode(
+        self.residualsBase, self.residuals = self.extractResiduals()
+        self.pdfsBase, self.pdfs = self.extractPDFs()
+        self.resHistBase = alt.Chart(self.residualsBase).mark_bar(opacity=0.6).encode(
                 alt.X("Speed residual", bin=alt.Bin(extent=[-40,40],step=4)),
-                alt.Y('count()', stack=None), 
-                alt.Color("Model", scale=alt.Scale(domain=[m.getName() for m in self.submodels], range=['#4d96d9','#ff6b6b'])))
-        self.resPDF = alt.Chart(self.pdfs).mark_line().encode(x='Speed residual',y='Density',
-                color=alt.Color("Model", scale=alt.Scale(domain=[m.getName() for m in self.submodels], range=['#4d96d9','#ff6b6b'])))
+                alt.Y('count()'),
+                alt.Color("Model", scale=alt.Scale(domain=[m.getName() for m in self.submodels], range=['#e7ba52','#1f77b4','#9467bd','#ed1717'])))
+        self.resPDFBase = alt.Chart(self.pdfsBase).mark_line(opacity=0.7).encode(x='Speed residual',y='Density',
+                color=alt.Color("Model", scale=alt.Scale(domain=[m.getName() for m in self.submodels], range=['#e7ba52','#1f77b4','#9467bd','#ed1717'])))
+        self.resHist = alt.Chart(self.residuals).mark_bar().encode(alt.X("Speed residual",
+                            bin=alt.Bin(extent=[-40,40],step=4)),y='count()').properties(title=self.name)
+        self.resPDF = alt.Chart(self.pdfs).mark_line().encode(x='Speed residual',y='Density').properties(title=self.name)
 
     def exctractValMetrics(self):
         metrics = [m.getMetrics() for m in self.submodels]
@@ -148,18 +153,32 @@ class FVE(MLModel):
     
     def extractResiduals(self):
         residuals_df = [m.getResiduals()['residuals'] for m in self.submodels]
+        res_fve = residuals_df[0].copy()
+        res_fve['Model'] = self.getName()
+        res_fve['Speed residual'] = 0
         for i, df in enumerate(residuals_df):
             residuals_df[i]['Model'] = self.submodels[i].getName()
-        return pd.concat(residuals_df, axis=0)
+            res_fve['Speed residual'] += self.weights[i]*residuals_df[i]['Speed residual']
+        return pd.concat(residuals_df, axis=0), res_fve
     
     def extractPDFs(self):
         pdf_df = [m.getResiduals()['pdf_data'] for m in self.submodels]
+        pdf_fve = pdf_df[0].copy()
+        pdf_fve['Model'] = self.getName()
+        pdf_fve['Density'] = 0
         for i, df in enumerate(pdf_df):
             pdf_df[i]['Model'] = self.submodels[i].getName()
-        return pd.concat(pdf_df, axis=0)
+            pdf_fve['Density'] += self.weights[i]*pdf_df[i]['Density']
+        return pd.concat(pdf_df, axis=0), pdf_fve
     
     def getBaseEstCV(self):
         return self.baseest_cv
+    
+    def getBaseResidualHist(self):
+        return self.resHistBase
+
+    def getBaseResidualPDF(self):
+        return self.resPDFBase
     
     def predict(self, query):
         b_preds = [m.predict(query) for m in self.submodels]

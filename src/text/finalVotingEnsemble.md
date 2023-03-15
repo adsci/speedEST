@@ -17,9 +17,10 @@ The performance of the developed base estimators is summarised in the table belo
 These values give an estimation on the mean error and standard deviation the base estimators will make on unseen data. 
 As the base estimators used in the Final Voting Ensemble were retrained on the full training set after cross-validation, there are no such scores for that model. 
 
+To estimate the performance of the ensemble, the histogram and probability density distribution of the residuals has been computed as a weighted average of residuals from the base estimators.
 ![SplitHere]()
 
-For completeness, the histogram and probability density distribution of the residuals (differences between the true and predicted values) in the validation set are presented below for each base estimator. Note that these are all residuals recorded in the course of cross-validation using 50 different random splits of the full training sets (a total of 1600 predictions).
+For completeness, the stacked histogram and probability density distribution of the residuals (differences between the true and predicted values) in the validation set are presented below for each base estimator. Note that for each base estimator all residuals were recorded in the course of cross-validation using 50 different random splits of the full training sets (a total of 1600 predictions). In the resulting graph, the histograms of all base estimators are stacked on top of each other (giving a total of 6400 predictions).
 
 ![SplitHere]()
 
