@@ -50,15 +50,15 @@ After that, the models make predictions on the validation set, and suitable metr
 For the metrics, the mean absolute error (MAE) between the target and predicted value is considered. 
 It can be computed as
 
-$\textrm{MAE} = \dfrac{\sum_{i=1}^n | y_i - \hat{y}_i |}{n}$,
+$\textrm{MAE} = \dfrac{\overset{n}{\underset{i=1}{\sum}} | y_i - \hat{y}_i |}{n}$,
 
 where $y_i$ denotes the target value, and $\hat{y}_i$ is the value predicted by the model. The MAE gives a rough estimate of the mean error on the predicted value given by the model.
 
 Another metric is the coefficient of determination, called $R^2$, which can be computed as
 
-$R^2 = 1 - \dfrac{\sum_{i=1}^n ( y_i - \hat{y}_i)^2}{\sum_{i=1}^n ( y_i - \bar{y})^2}$,
+$R^2 = 1 - \dfrac{\overset{n}{\underset{i=1}{\sum}} ( y_i - \hat{y}_i)^2}{\overset{n}{\underset{i=1}{\sum}} ( y_i - \bar{y})^2}$,
 
-where $\bar{y} = \frac{1}{n} \sum_{i=1}^n y_i$ is the average target value.
+where $\bar{y} = \dfrac{1}{n} \overset{n}{\underset{i=1}{\sum}} y_i$ is the average target value.
 
 This score provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model. 
 The best possible $R^2$ score is $1.0$.

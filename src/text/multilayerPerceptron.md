@@ -13,7 +13,7 @@ Network architecture is schematically depicted below, using the Netron tool [1].
 
 The above figure shows the forward pass of the network (given inputs, the output value is computed). In order to train the network, a suitable loss function must be defined. In this case, the *mean squared error* (MSE) loss function was utilised. The loss on a given training set with $n$ examples can be computed as
 
-$\textrm{MSE} = \dfrac{1}{n} \sum_{i=1}^n (y_i - \hat{y}_i)^2$,
+$\textrm{MSE} = \dfrac{1}{n} \overset{n}{\underset{i=1}{\sum}} (y_i - \hat{y}_i)^2$,
 
 where $y_i$, and $\hat{y}_i$ are the target and predicted values, respectively.
 
@@ -32,14 +32,14 @@ $x'_i = \dfrac{x_{i} - \mu}{\sqrt{\sigma^2}}$,
 where $x_i$ is the raw value of the feature $i$, $\mu$ is the mean of the population, and $\sigma^2$ is the variance of the population.
 As the mean and variance of the whole population are not known, we use the unbiased estimators on the training set. Assuming that the size of the training set is $n$, we have
 
-$\hat{\mu} = \dfrac{1}{n} \sum_{i=1}^{n} x_i$
+$\hat{\mu} = \dfrac{1}{n} \overset{n}{\underset{i=1}{\sum}} x_i$
 
-$\hat{\sigma}^2 = \dfrac{1}{n-1} \sum_{i=1}^{n} (x_i - \hat{\mu})^2$
+$\hat{\sigma}^2 = \dfrac{1}{n-1} \overset{n}{\underset{i=1}{\sum}} (x_i - \hat{\mu})^2$
 
 The target values are standardised in an analogous way.
 As a result, the actual value of the loss function is computed between the standardised values
 
-$\textrm{MSE} = \dfrac{1}{n} \sum_{i=1}^n (y'_i - \hat{y}'_i)^2$
+$\textrm{MSE} = \dfrac{1}{n} \overset{n}{\underset{i=1}{\sum}} (y'_i - \hat{y}'_i)^2$
 
 It is noteworthy that during inference, the validation and test sets are standardised with respect to the means and standard deviations of the *training* set.
 ## Training and performance metrics
@@ -49,15 +49,15 @@ Furthermore, the mean absolute error (MAE) between the target and predicted valu
 The MAE can gives rough estimate of the mean error on the predicted value given by the model.
 The MAE is computed as
 
-$\textrm{MAE} = \dfrac{\sum_{i=1}^n | y_i - \hat{y}_i |}{n}$,
+$\textrm{MAE} = \dfrac{\overset{n}{\underset{i=1}{\sum}} | y_i - \hat{y}_i |}{n}$,
 
 where $y_i$ denotes the target value, and $\hat{y}_i$ is the value predicted by the model. It is noteworthy that before computing the MAE the standardisation is reversed, i.e., the actual predicted values are computed from the predicted z-scores.
 
 Another useful model performance metric is the coefficient of determination, called $R^2$, which can be computed as
 
-$R^2 = 1 - \dfrac{\sum_{i=1}^n ( y_i - \hat{y}_i)^2}{\sum_{i=1}^n ( y_i - \bar{y})^2}$,
+$R^2 = 1 - \dfrac{\overset{n}{\underset{i=1}{\sum}} ( y_i - \hat{y}_i)^2}{\overset{n}{\underset{i=1}{\sum}} ( y_i - \bar{y})^2}$,
 
-where $\bar{y} = \frac{1}{n} \sum_{i=1}^n y_i$ is the average target value.
+where $\bar{y} = \dfrac{1}{n} \overset{n}{\underset{i=1}{\sum}} y_i$ is the average target value.
 
 This score provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model.
 The best possible $R^2$ score is $1.0$.

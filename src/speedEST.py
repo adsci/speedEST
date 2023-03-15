@@ -67,6 +67,18 @@ elif selected_page == 'Regularized Linear Ensemble':
     with tab2:
         st.altair_chart(models.rle.getResidualPDF(), use_container_width=True)
     st.markdown(text.rledesc_md[0][3], unsafe_allow_html=True)
+elif selected_page == 'Support Vector Ensemble':
+    st.markdown(text.svedesc_md[0][0], unsafe_allow_html=True)
+    st.image('src' + text.svedesc_md[1][0])
+    st.markdown(text.svedesc_md[0][1], unsafe_allow_html=True)
+    st.dataframe(models.sve.getMetrics().style.format("{:.3f}"))
+    st.markdown(text.svedesc_md[0][2], unsafe_allow_html=True)
+    tab1, tab2 = st.tabs(["Histogram", "Density"])
+    with tab1:
+        st.altair_chart(models.sve.getResidualHist(), use_container_width=True)
+    with tab2:
+        st.altair_chart(models.sve.getResidualPDF(), use_container_width=True)
+    st.markdown(text.svedesc_md[0][3], unsafe_allow_html=True)
 elif selected_page == 'Multilayer Perception':
     st.markdown(text.mlpdesc_md[0][0], unsafe_allow_html=True)
     st.image('src' + text.mlpdesc_md[1][0])

@@ -2,18 +2,18 @@
 
 
 The Regularized Linear Ensemble model [1] is an ensemble estimator that uses several base regressors and averages their prediction to form a final prediction. 
-This particular model consider linear models: Lasso [2], Ridge regression [3], and Elastic Net model [4].
+This particular model considers linear models: Lasso [2], Ridge regression [3], and Elastic Net model [4].
 In the following, the base estimators are briefly introduced.
 
 ![Split](../img/rleModel.png)
 
 In order to train a linear model, the *mean squared error* loss function is considered. The loss on a given training set with $n$ examples can be computed as
 
-$\mathcal{L}(\beta) = \dfrac{1}{n} \sum_{i=1}^n (y_i - x_i \beta)^2 = \dfrac{1}{n} || y - X \beta ||^2_2$,
+$\mathcal{L}(\beta) = \dfrac{1}{n} \overset{n}{\underset{i=1}{\sum}} (y_i - x_i \beta)^2 = \dfrac{1}{n} || y - X \beta ||^2_2$,
 
 where $y_i$ is the target variable associated with a feature vector $x_i$. The equation is rewritten in matrix form, where $|| \bullet ||_2^2$ denotes the L2-norm, $y$ are the target variables in vector form, and $X$ is the feature matrix of training examples. Model parameters are grouped within the vector $\beta$. The optimal set of model parameters, $\hat{\beta}$ which are found during training of the model:
 
-$\hat{\beta} = \text{argmin}_\beta (\dfrac{1}{n} || y - X \beta ||^2_2)$
+$\hat{\beta} = \underset{\beta}{\text{argmin}} (\dfrac{1}{n} || y - X \beta ||^2_2)$
 
 This set of parameters minimizes the loss function.
 
@@ -28,9 +28,9 @@ $x'_i = \dfrac{x_{i} - \mu}{\sqrt{\sigma^2}}$,
 where $x_i$ is the raw value of the feature $i$, $\mu$ is the mean of the population, and $\sigma^2$ is the variance of the population.
 As the mean and variance of the whole population are not known, we use the unbiased estimators on the training set. Assuming that the size of the training set is $n$, we have
 
-$\hat{\mu} = \dfrac{1}{n} \sum_{i=1}^{n} x_i$
+$\hat{\mu} = \dfrac{1}{n} \overset{n}{\underset{i=1}{\sum}} x_i$
 
-$\hat{\sigma}^2 = \dfrac{1}{n-1} \sum_{i=1}^{n} (x_i - \hat{\mu})^2$
+$\hat{\sigma}^2 = \dfrac{1}{n-1} \overset{n}{\underset{i=1}{\sum}} (x_i - \hat{\mu})^2$
 
 The target values are standardised in an analogous way.
 It is noteworthy that during inference, the validation and test sets are standardised with respect to the means and standard deviations of the *training* set.
@@ -44,7 +44,7 @@ $\mathcal{L} = \dfrac{1}{n} || y - X \beta ||^2_2 + \lambda ||\beta||_1$
 
 where $|| \bullet ||_1$ denotes the L1-norm, and the hyperparameter $\lambda$ controls the amount of the regularization. The optimal set of model parameters is then found as:
 
-$\hat{\beta} = \text{argmin}_\beta ( \dfrac{1}{n}|| y - X \beta ||^2_2 + \lambda ||\beta||_1)$
+$\hat{\beta} = \underset{\beta}{\text{argmin}} ( \dfrac{1}{n}|| y - X \beta ||^2_2 + \lambda ||\beta||_1)$
 
 Lasso regression tends to eliminate the weights of the least important features, i.e., it automatically performs feature selection and outputs a sparse model, where a few features are important. 
 
@@ -60,11 +60,12 @@ $\mathcal{L} = \dfrac{1}{n} || y - X \beta ||^2_2 + \dfrac{\lambda}{2} ||\beta||
 
 where $|| \bullet ||_2$ denotes the L2-norm. Regularization forces the learning algorithm to keep the parameters as small as possible. The optimal set of model parameters is then found as:
 
-$\hat{\beta} = \text{argmin}_\beta ( \dfrac{1}{n}|| y - X \beta ||^2_2 + \dfrac{\lambda}{2} ||\beta||_2^2)$
+$\hat{\beta} = \underset{\beta}{\text{argmin}} ( \dfrac{1}{n}|| y - X \beta ||^2_2 + \dfrac{\lambda}{2} ||\beta||_2^2)$
 
 The hyperparameter $\lambda$ controls the amount of the shrinkage. The larger the value of $\lambda$, the greater the amount of shrinkage and the model parameters show more robustness to colinearity.
 
 To build the model, the `Ridge` class in `scikit-learn` was used. An optimal set of model hyperparameters was found using 5-fold cross-validation on the full training set including 189 training examples (using 20% of the training samples as validation set). In the course of cross-validation, the values of the hyperparameters used to train the model were repeatedly sampled from a predefined distribution.
+In the end, the optimal set was chosen as the one yielding the lowest loss function value on the validation set, and the model was retrained on the full training set for further use in voting ensemble.
 
 ## Elastic Net (`ElasticNet`)
 
@@ -74,11 +75,12 @@ $\mathcal{L} = \dfrac{1}{n} || y - X \beta ||^2_2 + r \lambda ||\beta||_1 + \dfr
 
 where $|| \bullet ||_1$ and $|| \bullet||_2$ denote the L1- and L2-norms, respectively. The ratio of the mix is controlled by the parameter $r$ (so that $r=0$ is equivalent to Ridge regression and $r=1$ is equivalent to Lasso regression). The optimal set of model parameters is then found as:
 
-$\hat{\beta} = \text{argmin}_\beta ( \dfrac{1}{n}|| y - X \beta ||^2_2 + r \lambda ||\beta||_1 + \dfrac{1-r}{2}\lambda ||\beta||_2^2)$
+$\hat{\beta} = \underset{\beta}{\text{argmin}} ( \dfrac{1}{n}|| y - X \beta ||^2_2 + r \lambda ||\beta||_1 + \dfrac{1-r}{2}\lambda ||\beta||_2^2)$
 
 The Elastic net is a middle ground between the two regularizations, as it tends to eliminate unimportant feature weights and works well in cases when the number of features is greater than the number of training examples or when several features are strongly correlated.
 
 To build the model, the `ElasticNet` class in `scikit-learn` was used. An optimal set of model hyperparameters was found using 5-fold cross-validation on the full training set including 189 training examples (using 20% of the training samples as validation set). In the course of cross-validation, the values of the hyperparameters used to train the model were repeatedly sampled from a predefined distribution.
+In the end, the optimal set was chosen as the one yielding the lowest loss function value on the validation set, and the model was retrained on the full training set for further use in voting ensemble.
 
 ## Regularized Linear Ensemble (`RLE`)
 
@@ -94,15 +96,15 @@ After that, the models make predictions on the validation set, and suitable metr
 For the metrics, the mean absolute error (MAE) between the target and predicted value is considered. 
 It can be computed as
 
-$\textrm{MAE} = \dfrac{\sum_{i=1}^n | y_i - \hat{y}_i |}{n}$,
+$\textrm{MAE} = \dfrac{\overset{n}{\underset{i=1}{\sum}} | y_i - \hat{y}_i |}{n}$,
 
 where $y_i$ denotes the target value, and $\hat{y}_i$ is the value predicted by the model. The MAE gives a rough estimate of the mean error on the predicted value given by the model.
 
 Another metric is the coefficient of determination, called $R^2$, which can be computed as
 
-$R^2 = 1 - \dfrac{\sum_{i=1}^n ( y_i - \hat{y}_i)^2}{\sum_{i=1}^n ( y_i - \bar{y})^2}$,
+$R^2 = 1 - \dfrac{\overset{n}{\underset{i=1}{\sum}} ( y_i - \hat{y}_i)^2}{\overset{n}{\underset{i=1}{\sum}} ( y_i - \bar{y})^2}$,
 
-where $\bar{y} = \frac{1}{n} \sum_{i=1}^n y_i$ is the average target value.
+where $\bar{y} = \dfrac{1}{n} \overset{n}{\underset{i=1}{\sum}} y_i$ is the average target value.
 
 This score provides a measure of how well observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model. 
 The best possible $R^2$ score is $1.0$.

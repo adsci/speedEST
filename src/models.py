@@ -41,7 +41,7 @@ class MLModel():
 
 class TRE(MLModel):
     def __init__(self, modelpath='src/models/treeEnsemble.pkl', metricpath='src/models/tre_metrics.pkl',
-                 residualpath='src/models/tre_residuals.pkl', histrange=[-32,32]):
+                 residualpath='src/models/tre_residuals.pkl', histrange=[-40,40]):
         super().__init__(modelpath, metricpath, residualpath, histrange)
         self.name = 'Tree Ensemble'
         self.abbr = 'TRE'
@@ -54,7 +54,7 @@ class TRE(MLModel):
 
 class MLP(MLModel):
     def __init__(self, modelpath='src/models/multilayerPerceptron.pt', metricpath='src/models/mlp_metrics.pkl',
-                 residualpath='src/models/mlp_residuals.pkl', histrange=[-24,24]):
+                 residualpath='src/models/mlp_residuals.pkl', histrange=[-40,40]):
         super().__init__(modelpath, metricpath, residualpath, histrange)
         self.name = 'Multilayer Perceptron'
         self.abbr = 'MLP'
@@ -106,7 +106,7 @@ class RLE(MLModel):
 
 class SVE(MLModel):
     def __init__(self, modelpath='src/models/supportVectorEnsemble.pkl', metricpath='src/models/sve_metrics.pkl',
-                 residualpath='src/models/sve_residuals.pkl', histrange=[-24,24]):
+                 residualpath='src/models/sve_residuals.pkl', histrange=[-40,40]):
         super().__init__(modelpath, metricpath, residualpath, histrange)
         self.name = "Support Vector Ensemble"
         self.abbr = "SVE"
@@ -172,5 +172,5 @@ class FVE(MLModel):
 
 
 tre, rle, sve, mlp = TRE(), RLE(), SVE(), MLP()
-w = [0.15, 0.05, 0.40, 0.40]
+w = [0.20, 0.10, 0.35, 0.35]
 fve = FVE([tre, rle, sve, mlp], w)
