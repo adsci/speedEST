@@ -95,3 +95,4 @@ As can be seen in the table, the MAE (in km/h) in the validation set is similar 
 
 8. `AdaBoostRegressor`. scikit-learn documentation. https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostRegressor.html
 
+9. Géron, A. (2019). Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems. (2nd ed.). O’Reilly. 

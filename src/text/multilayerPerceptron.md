@@ -64,7 +64,7 @@ The best possible $R^2$ score is $1.0$.
 Similar to the MAE, the *actual* predicted values are recalculated from the z-scores before computation of the $R^2$ score.
 
 To evaluate model performance, the original training set (189 training examples), was repeatedly split into training and validation sets (157 and 32 examples, respectively). For each random split, the neural network was trained on the smaller training set. After training, the network made its predictions on the validation, and suitable metrics are computed. This process was repeated for 50 random splits of the full training set. 
-This way, by taking the mean and standard deviation of the MAE computed on the validation sets, an estimate of model performance on unseed data is obtained.
+This way, by taking the mean and standard deviation of the MAE computed on the validation sets, an estimate of model performance on unseen data is obtained.
 
 Loss function value and the MAE for training and validations sets are plotted below. 
 Note that these are the mean values over all validation and training sets.

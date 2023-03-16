@@ -19,7 +19,7 @@ The scores for the Final Voting Ensemble in an analogous fashion, calculating th
  
 ![SplitHere]()
 
-It is noteworthy, that the mean absolute error and its standard deviation (over all validation sets) of the Final Voting Ensemble is smaller than those of any individual base estimators.
+It is noteworthy, that the mean absolute error and its standard deviation (over all validation sets) of the Final Voting Ensemble are smaller than those of any individual base estimators.
 
 For completeness, the stacked histogram and probability density distribution of the residuals (differences between the true and predicted values) in the validation set are presented below for each base estimator. Note that for each base estimator all residuals were recorded in the course of cross-validation using 50 different random splits of the full training sets (a total of 1600 predictions). In the resulting graph, the histograms of all base estimators are stacked on top of each other (giving a total of 6400 predictions).
 

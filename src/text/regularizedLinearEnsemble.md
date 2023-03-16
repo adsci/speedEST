@@ -141,6 +141,6 @@ The histogram and probability density distribution of the residuals (differences
 
 7. `ElasticNet`. scikit-learn documentation. https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.ElasticNet.html
 
-
+8. Géron, A. (2019). Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems. (2nd ed.). O’Reilly. 
 
 

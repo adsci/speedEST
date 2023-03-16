@@ -9,11 +9,11 @@ In the following, the base estimators are briefly introduced.
 
 ## Support Vector Machines
 
-Support Vector Machine (SVM) is versatile machine learning model capable of performing classifacion and regression tasks. In a nutshell, the SVM fits a "margin" (or a tube) that separates different classes. Points lying on different sides of the margin will be classified as belonging to different classes. 
+Support Vector Machine (SVM) is versatile machine learning model capable of performing classification and regression tasks. In a nutshell, the SVM fits a "margin" (or a tube) that separates different classes. Points lying on different sides of the margin will be classified as belonging to different classes. 
 The margin is said to be *supported* on the instances located at its edges (which are also called *support vectors*).  
 However, if we impose that all instances must be on the "right" side of the margin (*hard margin classification*), the margin (if found) will be susceptible to outlier and will likely not generalize very well.  
-Usually, some degree of margin violation is allowed, i.e., instances can end up within or on the "wrong" side of the maring (*soft margin classification*).
-Hence, the SVM algorithms are trying to maximize the width of the margin, while keeping the amount of margin violations small (controlled with hyperparameter $C$ - a low $C$ makes the desicion surface smoother, while a high $C$ aims at classyfing all examples correctly).
+Usually, some degree of margin violation is allowed, i.e., instances can end up within or on the "wrong" side of the margin (*soft margin classification*).
+Hence, the SVM algorithms are trying to maximize the width of the margin, while keeping the amount of margin violations small (controlled with hyperparameter $C$ - a low $C$ makes the decision surface smoother, while a high $C$ aims at classifying all examples correctly).
 
 Support Vector Regression (SVR) reverses this objective. Instead of trying to fit the largest possible margin between two classes (while limiting margin violation), SVR tries to fit a margin, which contains as many training instances as possible while limiting margin violations (instances outside the margin). The width of the margin is controlled with hyperparameter $\varepsilon$, hence this model is often called $\varepsilon$-SVR.
 
@@ -29,10 +29,10 @@ $\qquad \qquad \quad w^T \phi(x_i) + b - y_i \leq \varepsilon + \zeta_i^*$,
 
 $\qquad \qquad \quad \zeta_i, \zeta_i^* \geq 0$.
 
-The goal is to find the weights $w$ and bias $b$ so that predictions for a vector $x$, $w^T x + b$ can be made. In the above, the slack variables $\zeta_i$ and $\zeta_i^*$ penalize the objective, depending on thether their prediction lie above or below the $\varepsilon$-sized margin.
-Hard and soft margin problems are conveq quadratiz optimization problems with linear constraints, and can usually be solved using Quadratic Programming solvers.
+The goal is to find the weights $w$ and bias $b$ so that predictions for a vector $x$, $w^T x + b$ can be made. In the above, the slack variables $\zeta_i$ and $\zeta_i^*$ penalize the objective, depending on whether their prediction lies above or below the $\varepsilon$-sized margin.
+Hard and soft margin problems are convex quadratic optimization problems with linear constraints, and can usually be solved using Quadratic Programming solvers.
 
-It is noteworthy that the features $x_i$ are mapped to a (potentially) higher-dimensional space using the mapping function $\phi(x_i)$. This way, we are able to perform nonlinear classification/regression. Depending on the mapping function, this operation can be expensive, adding a large number of features. However, it is possible to obtain the same result without actually addiny any new features, using a kernel trick. Using this trick, however, requires another formulation of the problem, i.e., a *dual* problem.
+It is noteworthy that the features $x_i$ are mapped to a (potentially) higher-dimensional space using the mapping function $\phi(x_i)$. This way, we are able to perform nonlinear classification/regression. Depending on the mapping function, this operation can be expensive, adding a large number of features. However, it is possible to obtain the same result without actually adding any new features, using a kernel trick. Using this trick, however, requires another formulation of the problem, i.e., a *dual* problem.
 The dual problem is an equivalent formulation of the primal problem, which (under certain conditions) will produce the same solution. The dual form of the SVR problem is the following:
 
 
@@ -43,7 +43,7 @@ subject to $\quad e^T (\alpha - \alpha^*) = 0$,
 $\qquad \qquad \quad 0 \leq \alpha_i, \alpha_i^* \leq C$.
 
 Within this setting, $e$ is a vector of ones, and $Q$ is the matrix of kernels. Each entry $Q_{ij} = K(x_i, x_j) = \phi(x_i)^T \phi(x_j)$ contains a kernel, using implicitly mapping the features into a higher (or infinite) dimensional space. 
-Using the kernel trick, it is possible to compute the values of $\phi(x)^T\phi(x')$ directly by performing simple operations on the dot product of the original vectors $x$ and $x'$, without explitly computing their mappings $\phi(x)$ and $\phi(x')$. 
+Using the kernel trick, it is possible to compute the values of $\phi(x)^T\phi(x')$ directly by performing simple operations on the dot product of the original vectors $x$ and $x'$, without explicitly computing their mappings $\phi(x)$ and $\phi(x')$. 
 
 The optimization algorithm finds the values of the parameters $\alpha_i$ and $\alpha_i^*$. All non-zero values of $\alpha_i$ and $\alpha_i^*$ signify that the sample is a support vector.
 Using those, it is possible to compute the bias $b$. 
@@ -142,9 +142,8 @@ The histogram and probability density distribution of the residuals (differences
 
 1. `VotingRegressor`. scikit-learn documentation. https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.VotingRegressor.html
 
+2. `SVR`. scikit-learn documentation. https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVR.html
 
-5. `SVR`. scikit-learn documentation. https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVR.html
-
-
+3. Géron, A. (2019). Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems. (2nd ed.). O’Reilly. 
 
 
