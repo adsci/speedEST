@@ -133,12 +133,15 @@ class FVE(MLModel):
         self.baseest_cv = self.metrics.loc[[('MAE','Val'), ('σ MAE','Val')]]
         self.residualsBase, self.residuals = self.extractResiduals()
         self.pdfsBase, self.pdfs = self.extractPDFs()
-        self.resHistBase = alt.Chart(self.residualsBase).mark_bar(opacity=0.6).encode(
+        self.resHistBase = alt.Chart(self.residualsBase).mark_bar(opacity=0.8).encode(
                 alt.X("Speed residual", bin=alt.Bin(extent=[-40,40],step=4)),
                 alt.Y('count()'),
-                alt.Color("Model", scale=alt.Scale(domain=[m.getName() for m in self.submodels], range=['#e7ba52','#1f77b4','#9467bd','#ed1717'])))
-        self.resPDFBase = alt.Chart(self.pdfsBase).mark_line(opacity=0.7).encode(x='Speed residual',y='Density',
-                color=alt.Color("Model", scale=alt.Scale(domain=[m.getName() for m in self.submodels], range=['#e7ba52','#1f77b4','#9467bd','#ed1717'])))
+                alt.Color("Model", scale=alt.Scale(domain=[m.getName() for m in self.submodels], 
+                                                   range=['#c98b65','#c96567','#9d5a63','#304455'])))
+        # colormap=['#c98b65','#c96567','#9d5a63','#644e5b','#304455']
+        self.resPDFBase = alt.Chart(self.pdfsBase).mark_line(opacity=1).encode(x='Speed residual',y='Density',
+                color=alt.Color("Model", scale=alt.Scale(domain=[m.getName() for m in self.submodels], 
+                                                         range=['#e7ba52','#1f77b4','#9467bd','#ed1717'])))
         self.resHist = alt.Chart(self.residuals).mark_bar().encode(alt.X("Speed residual",
                             bin=alt.Bin(extent=[-40,40],step=4)),y='count()').properties(title=self.name)
         self.resPDF = alt.Chart(self.pdfs).mark_line().encode(x='Speed residual',y='Density').properties(title=self.name)
