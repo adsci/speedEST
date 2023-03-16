@@ -129,8 +129,8 @@ class FVE(MLModel):
         self.abbr = 'FVE'
         self.submodels = submodels
         self.weights = weights
-        self.baseest_cv = self.exctractValMetrics()
         self.metrics = utils.loadPandasPickle("src/models/fve_metrics.pkl")
+        self.baseest_cv = self.metrics.loc[[('MAE','Val'), ('σ MAE','Val')]]
         self.residualsBase, self.residuals = self.extractResiduals()
         self.pdfsBase, self.pdfs = self.extractPDFs()
         self.resHistBase = alt.Chart(self.residualsBase).mark_bar(opacity=0.6).encode(
@@ -142,14 +142,6 @@ class FVE(MLModel):
         self.resHist = alt.Chart(self.residuals).mark_bar().encode(alt.X("Speed residual",
                             bin=alt.Bin(extent=[-40,40],step=4)),y='count()').properties(title=self.name)
         self.resPDF = alt.Chart(self.pdfs).mark_line().encode(x='Speed residual',y='Density').properties(title=self.name)
-
-    def exctractValMetrics(self):
-        metrics = [m.getMetrics() for m in self.submodels]
-        cols = [metric.columns[-1] for metric in metrics]
-        fve_baseest_cv = pd.DataFrame(columns=cols)
-        for i, col in enumerate(cols):
-            fve_baseest_cv.loc[:, col] = metrics[i].loc[[('MAE','Val'), ('σ MAE','Val'), ('R2','Val')]][col]
-        return fve_baseest_cv
     
     def extractResiduals(self):
         residuals_df = [m.getResiduals()['residuals'] for m in self.submodels]
