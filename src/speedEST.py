@@ -21,7 +21,7 @@ with st.sidebar:
     v_spacer(1)
     st.write(utils.link_button('KWM website','https://wilis.pg.edu.pl/en/department-mechanics-materials-and-structures'),unsafe_allow_html=True)
 
-    v_spacer(13)
+    v_spacer(19)
     st.text("Copyright (c) 2023 \n Gdańsk University of Technology")
     st.text("Data acquisition by\n Dawid Bruski\n Łukasz Pachocki")
     st.text("Models and app by\n Adam Sciegaj")
