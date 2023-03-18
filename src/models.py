@@ -187,4 +187,4 @@ class FVE(MLModel):
 
 tre, rle, sve, mlp = TRE(), RLE(), SVE(), MLP()
 w = [0.20, 0.10, 0.35, 0.35]
-fve = FVE([tre, rle, sve, mlp], w)
+fve = FVE((tre, rle, sve, mlp), w)
