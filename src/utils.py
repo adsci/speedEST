@@ -1,6 +1,6 @@
 import re
+import dill
 import pickle
-import streamlit as st
 import pandas as pd
 import numpy as np
 import base64
@@ -25,14 +25,16 @@ def link_button(name,url):
     '''
     return html
 
-def loadPickle(path):
+def load_pickle(path, format='pickle'):
     with open(path,'rb') as f:
+        if format=='dill':
+            return dill.load(f)
         return pickle.load(f)
 
-def loadPandasPickle(path):
+def load_pandas_pickle(path):
     return pd.read_pickle(path)
 
-def splitMarkdown(path):
+def split_markdown(path):
     imgregex = re.compile(r"!\[Split\]\(..(.+)\)")
     with open(path,'r') as f:
         lines = f.read()
@@ -49,8 +51,8 @@ def splitMarkdown(path):
 
     return mdparts, imgpaths
 
-def loadAndFlattenResiduals(path):
-    resdata = loadPickle(path)
+def load_and_flatten_residuals(path):
+    resdata = load_pickle(path)
     encoding = {'residuals': 'Speed residual'}
     for k, v in resdata.items():
         if not isinstance(v, pd.DataFrame):

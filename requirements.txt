@@ -1,5 +1,8 @@
 streamlit == 1.31.0
 pandas == 2.2.0
 numpy == 1.26.3
+dill == 0.3.8
+scikit-learn == 1.4.0
+feature-engine == 1.6.2
 --extra-index-url https://download.pytorch.org/whl/cpu
 torch == 2.1.0
