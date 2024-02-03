@@ -185,6 +185,6 @@ class FVE(MLModel):
         return base_preds, ens_pred
 
 
-tre, rle, sve, mlp = TRE(), RLE(), SVE(), MLP()
-w = [0.20, 0.10, 0.35, 0.35]
-fve = FVE((tre, rle, sve, mlp), w)
+# tre, rle, sve, mlp = TRE(), RLE(), SVE(), MLP()
+# w = [0.20, 0.10, 0.35, 0.35]
+# fve = FVE((tre, rle, sve, mlp), w)
