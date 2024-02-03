@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 import text
 import models
 import utils
@@ -10,8 +11,8 @@ def v_spacer(height) -> None:
 with st.sidebar:
     st.image("src/img/logo.png")
     selected_page = st.selectbox('Select Page ',
-        ('Speed estimator', 'Data', 'Tree Ensemble', 'Regularized Linear Ensemble', 
-         'Support Vector Ensemble', 'Multilayer Perceptron', 'Final Voting Ensemble', 'About the project'),
+        ('Speed estimator', 'Data', 'Tree Ensemble', 'Multilayer Perceptron', 'Regularized Linear Ensemble',
+         'Support Vector Ensemble', 'Final Voting Ensemble', 'About the project'),
         index=0)
 
     v_spacer(1)
@@ -47,37 +48,37 @@ elif selected_page == 'Tree Ensemble':
     st.markdown(text.tredesc_md[0][0], unsafe_allow_html=True)
     st.image('src' + text.tredesc_md[1][0])
     st.markdown(text.tredesc_md[0][1], unsafe_allow_html=True)
-    st.dataframe(models.tre.get_metrics().style.format("{:.3f}"))
+    st.dataframe(models.submodels['TRE'].get_metrics().style.format("{:.3f}"))
     st.markdown(text.tredesc_md[0][2], unsafe_allow_html=True)
     tab1, tab2 = st.tabs(["Histogram", "Density"])
     with tab1:
-        st.altair_chart(models.tre.get_residual_hist(), use_container_width=True)
+        st.altair_chart(models.submodels['TRE'].get_residual_hist(), use_container_width=True)
     with tab2:
-        st.altair_chart(models.tre.get_residual_PDF(), use_container_width=True)
+        st.altair_chart(models.submodels['TRE'].get_residual_PDF(), use_container_width=True)
     st.markdown(text.tredesc_md[0][3], unsafe_allow_html=True)
 elif selected_page == 'Regularized Linear Ensemble':
     st.markdown(text.rledesc_md[0][0], unsafe_allow_html=True)
     st.image('src' + text.rledesc_md[1][0])
     st.markdown(text.rledesc_md[0][1], unsafe_allow_html=True)
-    st.dataframe(models.rle.get_metrics().style.format("{:.3f}"))
+    st.dataframe(models.submodels['RLE'].get_metrics().style.format("{:.3f}"))
     st.markdown(text.rledesc_md[0][2], unsafe_allow_html=True)
     tab1, tab2 = st.tabs(["Histogram", "Density"])
     with tab1:
-        st.altair_chart(models.rle.get_residual_hist(), use_container_width=True)
+        st.altair_chart(models.submodels['RLE'].get_residual_hist(), use_container_width=True)
     with tab2:
-        st.altair_chart(models.rle.get_residual_PDF(), use_container_width=True)
+        st.altair_chart(models.submodels['RLE'].get_residual_PDF(), use_container_width=True)
     st.markdown(text.rledesc_md[0][3], unsafe_allow_html=True)
 elif selected_page == 'Support Vector Ensemble':
     st.markdown(text.svedesc_md[0][0], unsafe_allow_html=True)
     st.image('src' + text.svedesc_md[1][0])
     st.markdown(text.svedesc_md[0][1], unsafe_allow_html=True)
-    st.dataframe(models.sve.get_metrics().style.format("{:.3f}"))
+    st.dataframe(models.submodels['SVE'].get_metrics().style.format("{:.3f}"))
     st.markdown(text.svedesc_md[0][2], unsafe_allow_html=True)
     tab1, tab2 = st.tabs(["Histogram", "Density"])
     with tab1:
-        st.altair_chart(models.sve.get_residual_hist(), use_container_width=True)
+        st.altair_chart(models.submodels['SVE'].get_residual_hist(), use_container_width=True)
     with tab2:
-        st.altair_chart(models.sve.get_residual_PDF(), use_container_width=True)
+        st.altair_chart(models.submodels['SVE'].get_residual_PDF(), use_container_width=True)
     st.markdown(text.svedesc_md[0][3], unsafe_allow_html=True)
 elif selected_page == 'Multilayer Perceptron':
     st.markdown(text.mlpdesc_md[0][0], unsafe_allow_html=True)
@@ -87,17 +88,17 @@ elif selected_page == 'Multilayer Perceptron':
     st.markdown(text.mlpdesc_md[0][2], unsafe_allow_html=True)
     tab1, tab2 = st.tabs(['Loss', 'Mean Absolute Error'])
     with tab1:
-        st.altair_chart(models.mlp.get_loss(), use_container_width=True)
+        st.altair_chart(models.submodels['MLP'].get_loss(), use_container_width=True)
     with tab2:
-        st.altair_chart(models.mlp.get_MAE(), use_container_width=True)
+        st.altair_chart(models.submodels['MLP'].get_MAE(), use_container_width=True)
     st.markdown(text.mlpdesc_md[0][3], unsafe_allow_html=True)
-    st.dataframe(models.mlp.get_metrics_full().style.format("{:.3f}"))
+    st.dataframe(models.submodels['MLP'].get_metrics_full().style.format("{:.3f}"))
     st.markdown(text.mlpdesc_md[0][4], unsafe_allow_html=True)
     tab3, tab4 = st.tabs(["Histogram", "Density"])
     with tab3:
-        st.altair_chart(models.mlp.get_residual_hist(), use_container_width=True)
+        st.altair_chart(models.submodels['MLP'].get_residual_hist(), use_container_width=True)
     with tab4:
-        st.altair_chart(models.mlp.get_residual_PDF(), use_container_width=True)
+        st.altair_chart(models.submodels['MLP'].get_residual_PDF(), use_container_width=True)
     st.markdown(text.mlpdesc_md[0][5], unsafe_allow_html=True)
 elif selected_page == 'Final Voting Ensemble':
     st.markdown(text.fvedesc_md[0][0], unsafe_allow_html=True)
@@ -120,19 +121,20 @@ elif selected_page == 'Speed estimator':
         ### Vehicle speed estimation at impact with a steel road barrier using Machine Learning
         """)
 
-    mass = st.number_input('Enter the mass of the vehicle, including the mass of occupants [kg]', min_value=900.0, max_value=1800.0, value=1300., step=1.0)
-    angle = st.slider('Choose the impact angle [degrees]', min_value=4, max_value=30, value=15, step=1)
-    fdisp = st.number_input('Enter the final lateral displacement of the barrier (static working width) [mm]', min_value=6.0, max_value=1400.0, value=100.0, step=10.0)
-    npoles = st.slider('Choose the number of damaged guardrail posts', min_value=0, max_value=11, step=1, value=2)
-    nsegments = st.slider('Choose the number of damaged segments of the W-beam guardrails', min_value=0, max_value=6, step=1, value = 1)
+    vMass = st.number_input('Enter the mass of the vehicle, including the mass of occupants [kg]', min_value=900.0, max_value=1800.0, value=1300., step=1.0)
+    iAng = st.slider('Choose the impact angle [degrees]', min_value=4, max_value=30, value=15, step=1)
+    fDisp = st.number_input('Enter the final lateral displacement of the barrier (static working width) [mm]', min_value=6.0, max_value=1400.0, value=100.0, step=10.0)
+    nP = st.slider('Choose the number of damaged guardrail posts', min_value=0, max_value=11, step=1, value=2)
+    dSeg = st.slider('Choose the number of damaged segments of the W-beam guardrails', min_value=0, max_value=6, step=1, value = 1)
 
-    usr_query = [mass,angle,fdisp/1000,npoles,nsegments*4]
+    feats = ['vehicleMass', 'impactAngle', 'finalDisp', 'nPoles', 'nSegments']
+    query = pd.DataFrame([map(float, [vMass, iAng, fDisp, nP, dSeg])], columns=feats)
 
     clicked = st.button('Estimate vehicle speed')
 
     if clicked:
         col1, col2 = st.columns(2)
-        basepreds, speedFVE = models.fve.predict(usr_query)
+        basepreds, speedFVE = models.fve.ensemble_predict(query)
         col1.subheader("Vehicle speed at impact was")
         col1.markdown(f"&emsp; :green[{speedFVE:.2f}] km/h (:orange[**_Final Voting Ensemble_**])")
         col2.dataframe(basepreds.style.format("{:.2f}"))

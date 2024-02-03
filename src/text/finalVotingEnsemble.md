@@ -6,10 +6,11 @@ their predictions.
 As the models represent a variety of methods, an ensemble created by these models might result in better predictions on new data. In the following, the Final Voting Ensemble model is built (using the `VotingRegressor` class in `scikit-learn`). 
 Having in mind the mean errors of individual models, the following weights are used:
 
-* 20% weight for Tree Ensemble (`TRE`)
-* 10% weight for Regularized Linear Ensemble (`RLE`)
-* 35% weight for Support Vector Ensemble (`SVE`)
+* 15% weight for Tree Ensemble (`TRE`)
 * 35% weight for Multilayer Perceptron (`MLP`)
+* 15% weight for Regularized Linear Ensemble (`RLE`)
+* 35% weight for Support Vector Ensemble (`SVE`)
+
 
 # Performance of base estimators
 
