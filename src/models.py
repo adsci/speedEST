@@ -14,7 +14,7 @@ class MLModel():
         self.model = model_data['model']
         self.input_transformer = model_data['input_pipeline']
         self.output_transformer = model_data['output_pipeline']
-        self.metrics = utils.load_pandas_pickle(metric_path)
+        self.metrics = pd.read_pickle(metric_path)
         self.residuals = utils.load_and_flatten_residuals(residual_path)
         self.res_hist = alt.Chart(self.residuals['residuals']).mark_bar().encode(alt.X("Speed residual",\
                                     bin=alt.Bin(extent=hist_range, step=4)), y='count()').properties(title=self.name)
@@ -113,7 +113,7 @@ class FVE():
         self.abbr = 'FVE'
         self.submodels = submodels
         self.weights = weights
-        self.metrics = utils.load_pandas_pickle("src/models/metrics/fve_metrics.pkl")
+        self.metrics = pd.read_pickle("src/models/metrics/fve_metrics.pkl")
         self.baseest_cv = self.metrics.loc[[('MAE','Val'), ('σ MAE','Val')]]
         self.residuals_base, self.residuals = self.extract_residuals()
         self.pdfs_base, self.pdfs = self.extract_pdfs()

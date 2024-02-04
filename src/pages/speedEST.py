@@ -4,9 +4,14 @@ import text
 import models
 import utils
 
+st.set_page_config(
+    page_title="speedEST",
+    layout="centered"
+)
 def v_spacer(height) -> None:
     for _ in range(height):
         st.write('\n')
+
 
 with st.sidebar:
     st.image("src/img/logo.png")
@@ -15,18 +20,30 @@ with st.sidebar:
          'Support Vector Ensemble', 'Final Voting Ensemble', 'About the project'),
         index=0)
 
-    v_spacer(1)
-    st.write(utils.link_button('Source','https://github.com/adsci/speedEST'),unsafe_allow_html=True)
-    v_spacer(1)
-    st.write(utils.link_button('CACM website','https://wilis.pg.edu.pl/en/cacm'),unsafe_allow_html=True)
-    v_spacer(1)
-    st.write(utils.link_button('KWM website','https://wilis.pg.edu.pl/en/department-mechanics-materials-and-structures'),unsafe_allow_html=True)
+    v_spacer(2)
+    st.write("Resources")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.link_button("Source code", "https://github.com/adsci/speedEST")
+    with col2:
+        st.link_button("Publication", "https://doi.org/10.1016/j.advengsoft.2023.103502")
 
-    v_spacer(17)
-    st.text("Copyright (c) 2023 \n Gdańsk University of Technology")
+
+    st.write("Miscellaneous")
+    col3, col4 = st.columns(2)
+    with col3:
+        st.link_button("CACM", "https://wilis.pg.edu.pl/en/cacm")
+    with col4:
+        st.link_button("KWM", "https://wilis.pg.edu.pl/en/department-mechanics-materials-and-structures")
+
+
+    v_spacer(19)
+    st.text(f"speedEST v{utils.read_version()}")
+    st.text("Copyright (c) 2022-2024 \n Gdańsk University of Technology")
     st.text("Data acquisition by\n Dawid Bruski\n Łukasz Pachocki")
-    st.text("Models and app by\n Adam Sciegaj")
+    st.text("Models and dashboard by\n Adam Ścięgaj")
     
+
 
 if selected_page == 'About the project':
     st.markdown("<p style='text-align: center; color: grey;'>"+ utils.img_to_html('src/img/logo.png',600)+"</p>", unsafe_allow_html=True)
@@ -134,8 +151,8 @@ elif selected_page == 'Speed estimator':
 
     if clicked:
         col1, col2 = st.columns(2)
-        basepreds, speedFVE = models.fve.ensemble_predict(query)
+        base_preds, ensemble_speed = models.fve.ensemble_predict(query)
         col1.subheader("Vehicle speed at impact was")
-        col1.markdown(f"&emsp; :green[{speedFVE:.2f}] km/h (:orange[**_Final Voting Ensemble_**])")
-        col2.dataframe(basepreds.style.format("{:.2f}"))
+        col1.markdown(f"&emsp; :green[{ensemble_speed:.2f}] km/h (:orange[**_Final Voting Ensemble_**])")
+        col2.dataframe(base_preds.style.format("{:.2f}"))
 
