@@ -15,9 +15,9 @@ with top_cols[0]:
                 Artistic rendition of random forest and gradient boosted regression, 
                 created by text-to-image deep learning model. 
                 A digital landscape is presented, where numerous decision trees are rooted, 
-                each more detailed with visible branches to emphasize the decision-making paths of the random forest algorithm. 
-                The gradient boosting manifests as luminous green trails weaving through the trees, 
-                showcasing the algorithm's iterative improvements. 
+                each more detailed with visible branches to emphasize the decision-making paths 
+                of the random forest algorithm. The gradient boosting manifests as luminous green trails 
+                weaving through the trees, showcasing the algorithm's iterative improvements. 
                 """,
     )
 
@@ -27,10 +27,10 @@ with top_cols[1]:
         # Tree Ensemble model (`TRE`)
     
     
-        The Tree Ensemble model [1] is an ensemble estimator that uses several base regressors 
+        The Tree Ensemble model [1, 2] is an ensemble estimator that uses several base regressors 
         and averages their prediction to form a final prediction. 
-        This particular model includes an extremely randomized forest [2,3], 
-        gradient boosted regression trees [4,5], and an AdaBoost regressor [6,7,8]. 
+        This particular model includes an extremely randomized forest [3,4], 
+        gradient boosted regression trees [5,6], and an AdaBoost regressor [7,8,9]. 
         In the following, the base estimators are briefly introduced.
         """
     )
@@ -196,33 +196,38 @@ with top_cols[1]:
     st.markdown(
         """
         ## References
+        
+        1. Bruski, D., Pachocki, L., Sciegaj, A., Witkowski, W. (2023). 
+        Speed estimation of a car at impact with a W-beam guardrail using numerical simulations and machine learning,
+        *Advances in Engineering Software* 184, 
+        https://doi.org/10.1016/j.advengsoft.2023.103502
     
-        1. `VotingRegressor`. scikit-learn documentation. 
+        2. `VotingRegressor`. scikit-learn documentation. 
         https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.VotingRegressor.html
         
-        2. Geurts, P. et al. (2006). Extremely Randomized Trees, 
+        3. Geurts, P. et al. (2006). Extremely Randomized Trees, 
         *Machine Learning* 63(1), pp. 3-42, https://doi.org/10.1007/s10994-006-6226-1
         
-        3. `ExtraTreesRegressor`. scikit-learn documentation. 
+        4. `ExtraTreesRegressor`. scikit-learn documentation. 
         https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html
         
-        4. Friedman, J. H. (2001). Greedy function approximation: a gradient boosting machine. 
+        5. Friedman, J. H. (2001). Greedy function approximation: a gradient boosting machine. 
         *Annals of statistics*, 1189-1232, https://doi.org/10.1214/aos/1013203451
         
-        5. `GradientBoostingRegressor`. scikit-learn documentation. 
+        6. `GradientBoostingRegressor`. scikit-learn documentation. 
         https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html
         
-        6. Freund, Y., Schapire, R. E. (1997). A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting. 
+        7. Freund, Y., Schapire, R. E. (1997). A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting. 
         *Journal of Computer and System Sciences* 55(1), pp. 119-139, 
         https://doi.org/10.1006/jcss.1997.1504
         
-        7. Drucker, H. (1997). Improving Regressors using Boosting Techniques. 
+        8. Drucker, H. (1997). Improving Regressors using Boosting Techniques. 
         *International Conference on Machine Learning*.
         
-        8. `AdaBoostRegressor`. scikit-learn documentation. 
+        9. `AdaBoostRegressor`. scikit-learn documentation. 
         https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostRegressor.html
         
-        9. Géron, A. (2019). Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow: 
+        10. Géron, A. (2019). Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow: 
         Concepts, Tools, and Techniques to Build Intelligent Systems. (2nd ed.). O’Reilly. 
         """
     )
