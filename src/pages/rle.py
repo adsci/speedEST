@@ -8,6 +8,22 @@ top_cols = st.columns([0.3, 0.35, 0.35], gap="large")
 
 make_sidebar()
 
+with top_cols[0]:
+    st.image("src/img/models/rle_logo.png",
+             caption="""
+              Artistic rendition of a linear model, created by text-to-image deep learning model. 
+              The visualization depicts a linear equation as the central theme, with coefficients 
+              being regularized by both lasso and ridge techniques. 
+              For lasso regression, coefficients shrinking to zero are shown, symbolized by some 
+              coefficients fading away or becoming transparent. 
+              For ridge regression, coefficients are getting smaller but not disappearing, 
+              which is symbolized by them diminishing in size. 
+              These concepts are be represented on a coordinate plane, with a fitting line passing through 
+              data points to signify the model's predictions. 
+              This image artistically conveys the concepts of constraint and optimization 
+              inherent in these regression techniques.
+              """)
+
 with top_cols[1]:
     st.markdown(
         """
@@ -21,7 +37,7 @@ with top_cols[1]:
         """
     )
 
-    st.image("src/img/rleModel.png")
+    st.image("src/img/models/rleModel.png")
 
     st.markdown(
         r"""

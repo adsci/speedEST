@@ -8,6 +8,17 @@ top_cols = st.columns([0.3, 0.35, 0.35], gap="large")
 
 make_sidebar()
 
+with top_cols[0]:
+    st.image("src/img/models/mlp_logo.png",
+             caption="""
+             Artistic rendition of a neural network, created by text-to-image deep learning model. 
+             The image features the neurons organized in a lines, distinct, horizontal layers, and ending with a single neuron, 
+             symbolizing the output layer. Each neuron is be depicted as a radiant, spherical node, 
+             with glowing connections to other neurons, representing the synaptic pathways. 
+             The layers should are clearly differentiated with different colors or luminosities, 
+             and the final neuron should is distinct, larger and more vibrant, indicating its role as the final output. 
+             """)
+
 with top_cols[1]:
     st.markdown(
         r"""
@@ -36,7 +47,7 @@ with top_cols[1]:
         """
     )
 
-    st.image("src/img/mlpModel_netron.png")
+    st.image("src/img/models/mlpModel_netron.png")
 
     st.markdown(
         r"""
@@ -60,7 +71,7 @@ with top_cols[1]:
         """
     )
 
-    st.image("src/img/mlpModel_torchviz.png")
+    st.image("src/img/models/mlpModel_torchviz.png")
 
     st.markdown(
         r"""

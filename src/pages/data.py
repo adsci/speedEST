@@ -36,7 +36,7 @@ st.markdown(
     """
 )
 
-st.image("src/img/impact_angle.png")
+st.image("src/img/features/impact_angle.png")
 
 st.markdown(
     """
@@ -52,7 +52,7 @@ st.markdown(
     """
 )
 
-st.image("src/img/fdisp.png")
+st.image("src/img/features/fdisp.png")
 
 st.markdown(
     """
@@ -66,7 +66,7 @@ st.markdown(
     """
 )
 
-st.image("src/img/damaged_parts.png")
+st.image("src/img/features/damaged_parts.png")
 
 st.markdown(
     """
@@ -83,7 +83,7 @@ st.markdown(
     """
 )
 
-st.image("src/img/safety_barrier.png")
+st.image("src/img/features/safety_barrier.png")
 
 st.markdown(
     """
@@ -94,7 +94,7 @@ st.markdown(
     """
 )
 
-st.image("src/img/vehicle.png")
+st.image("src/img/features/vehicle.png")
 
 st.markdown(
     """

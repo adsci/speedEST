@@ -8,6 +8,20 @@ top_cols = st.columns([0.3, 0.35, 0.35], gap="large")
 
 make_sidebar()
 
+with top_cols[0]:
+    st.image("src/img/models/fve_logo.png",
+             caption="""
+              Artistic rendition of a voting regressor, created by text-to-image deep learning model. 
+              The image represetns an ensemble of various musical instruments, each producing its own unique sound wave, 
+              converging into a harmonious symphony. This symphony represents the combined predictions of 
+              different regression models working together as a Voting Regressor. 
+              The instruments are set along a ling, symbolizing the collaborative decision-making process, 
+              with their sound waves visually merging into a central, clearer, and more defined wave that 
+              represents the consensus prediction. 
+              The overall image conveys the concept of multiple regressors working in concert to 
+              achieve a more accurate and robust prediction, embodying the collaborative spirit of a Voting Regressor.
+              """)
+
 with top_cols[1]:
     st.markdown(
         """
