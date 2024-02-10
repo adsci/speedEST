@@ -6,10 +6,6 @@ import numpy as np
 import pandas as pd
 import torch
 
-# TODO: remove after testing
-import warnings
-warnings.filterwarnings('ignore')
-
 
 def load_pickle(path, format="pickle"):
     with open(path, "rb") as f:
@@ -258,7 +254,13 @@ class FVE:
             preds, orient="index", columns=["Speed [km/h]"]
         )
         base_preds.index.name = "Base predictor"
+        weights = pd.DataFrame.from_dict(
+            self.weights, orient="index", columns=["Weight [%]"]
+        )
+        base_preds = weights.join(base_preds)
+        base_preds.loc[:, "Weight [%]"] = base_preds.loc[:, "Weight [%]"].apply(lambda x: x*100)
         base_preds.index = base_preds.index.map(full_names)
+        print(base_preds)
         return base_preds, ens_pred
 
     def extract_residuals(self):

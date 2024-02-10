@@ -113,3 +113,13 @@ def get_query() -> pd.DataFrame:
     query = pd.DataFrame([map(float, [vMass, iAng, fDisp, nP, nSeg])], columns=feats)
 
     return query
+
+
+def print_prediction(base_predictions, ensemble_speed):
+    st.subheader("Model prediction is")
+    st.subheader(
+        f"&emsp; :green[{ensemble_speed:.2f}] km/h", anchor=False
+    )
+    v_spacer(2)
+    st.subheader("Base estimators", anchor=False)
+    st.dataframe(base_predictions)
