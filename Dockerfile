@@ -10,5 +10,7 @@ RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 ENV PYTHONPATH "/"
 
 COPY src/ ./src/
+COPY .streamlit ./.streamlit
+COPY VERSION ./
 ENTRYPOINT ["streamlit", "run"]
-CMD ["src/speedEST.py"]
+CMD ["src/Home.py"]
