@@ -1,11 +1,9 @@
 import streamlit as st
-from utils import make_sidebar
-from models import sve
 
-st.set_page_config(
-    page_title="speedEST - Support Vector Ensemble",
-    layout="centered"
-)
+from models import sve
+from utils import make_sidebar
+
+st.set_page_config(page_title="speedEST - Support Vector Ensemble", layout="centered")
 
 make_sidebar()
 

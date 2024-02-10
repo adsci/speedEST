@@ -1,11 +1,9 @@
 import streamlit as st
-from utils import make_sidebar
-from models import fve
 
-st.set_page_config(
-    page_title="speedEST - Final Voting Ensemble",
-    layout="centered"
-)
+from models import fve
+from utils import make_sidebar
+
+st.set_page_config(page_title="speedEST - Final Voting Ensemble", layout="centered")
 
 make_sidebar()
 
@@ -67,8 +65,14 @@ st.markdown(
     """
 )
 
-tab1, tab2, tab3, tab4 = st.tabs(["Histogram - Base Estimators","Density - Base Estimators",
-                                       "Histogram - Ensemble", "Density - Ensemble"])
+tab1, tab2, tab3, tab4 = st.tabs(
+    [
+        "Histogram - Base Estimators",
+        "Density - Base Estimators",
+        "Histogram - Ensemble",
+        "Density - Ensemble",
+    ]
+)
 with tab1:
     st.altair_chart(fve.get_base_residual_hist(), use_container_width=True)
 with tab2:

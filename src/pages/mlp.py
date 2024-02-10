@@ -1,11 +1,9 @@
 import streamlit as st
-from utils import make_sidebar
-from models import mlp
 
-st.set_page_config(
-    page_title="speedEST - Multilayer Perceptron",
-    layout="centered"
-)
+from models import mlp
+from utils import make_sidebar
+
+st.set_page_config(page_title="speedEST - Multilayer Perceptron", layout="centered")
 
 make_sidebar()
 
@@ -139,7 +137,7 @@ st.markdown(
     """
 )
 
-tab1, tab2 = st.tabs(['Loss', 'Mean Absolute Error'])
+tab1, tab2 = st.tabs(["Loss", "Mean Absolute Error"])
 with tab1:
     st.altair_chart(mlp.get_loss(), use_container_width=True)
 with tab2:

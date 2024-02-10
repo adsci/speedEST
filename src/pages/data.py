@@ -1,10 +1,8 @@
 import streamlit as st
+
 from utils import make_sidebar
 
-st.set_page_config(
-    page_title="speedEST - Data",
-    layout="centered"
-)
+st.set_page_config(page_title="speedEST - Data", layout="centered")
 
 make_sidebar()
 

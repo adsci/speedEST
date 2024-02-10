@@ -1,11 +1,9 @@
 import streamlit as st
-from utils import make_sidebar
-from models import tre
 
-st.set_page_config(
-    page_title="speedEST - Tree Ensemble",
-    layout="centered"
-)
+from models import tre
+from utils import make_sidebar
+
+st.set_page_config(page_title="speedEST - Tree Ensemble", layout="centered")
 
 make_sidebar()
 
