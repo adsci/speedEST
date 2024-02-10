@@ -7,7 +7,7 @@ st.set_page_config(page_title="speedEST - Home", layout="wide")
 
 utils.make_sidebar()
 
-top_cols = st.columns([0.2, 0.4, 0.25, 0.15], gap="large")
+top_cols = st.columns([0.2, 0.4, 0.2, 0.2], gap="large")
 with top_cols[0]:
     utils.print_welcome_info()
 

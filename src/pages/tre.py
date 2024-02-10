@@ -1,7 +1,7 @@
 import streamlit as st
 
 from models import tre
-from utils import make_sidebar, get_query
+from utils import get_query, make_sidebar
 
 st.set_page_config(page_title="speedEST - Tree Ensemble", layout="wide")
 top_cols = st.columns([0.3, 0.35, 0.35], gap="large")
@@ -9,15 +9,17 @@ top_cols = st.columns([0.3, 0.35, 0.35], gap="large")
 make_sidebar()
 
 with top_cols[0]:
-    st.image("src/img/models/tre_logo.png",
-             caption="""
+    st.image(
+        "src/img/models/tre_logo.png",
+        caption="""
                 Artistic rendition of random forest and gradient boosted regression, 
                 created by text-to-image deep learning model. 
                 A digital landscape is presented, where numerous decision trees are rooted, 
                 each more detailed with visible branches to emphasize the decision-making paths of the random forest algorithm. 
                 The gradient boosting manifests as luminous green trails weaving through the trees, 
                 showcasing the algorithm's iterative improvements. 
-                """)
+                """,
+    )
 
 with top_cols[1]:
     st.markdown(
@@ -231,8 +233,9 @@ with top_cols[2]:
     with col1:
         query = get_query()
     with col2:
-        speed = tre.predict(query)
+        speed, status = tre.predict(query)
         col2.subheader(f"{tre.get_name()} predicts", anchor=False)
-        col2.subheader(
-            f"&emsp; :green[{speed:.2f}] km/h", anchor=False
-        )
+        if status:
+            col2.subheader(f"&emsp; :green[{speed:.2f}] km/h", anchor=False)
+        else:
+            col2.subheader(f"&emsp; :red[invalid prediction]", anchor=False)

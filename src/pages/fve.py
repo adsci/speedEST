@@ -1,7 +1,7 @@
 import streamlit as st
 
 from models import fve
-from utils import make_sidebar, get_query
+from utils import get_query, make_sidebar
 
 st.set_page_config(page_title="speedEST - Final Voting Ensemble", layout="wide")
 top_cols = st.columns([0.3, 0.35, 0.35], gap="large")
@@ -9,8 +9,9 @@ top_cols = st.columns([0.3, 0.35, 0.35], gap="large")
 make_sidebar()
 
 with top_cols[0]:
-    st.image("src/img/models/fve_logo.png",
-             caption="""
+    st.image(
+        "src/img/models/fve_logo.png",
+        caption="""
               Artistic rendition of a voting regressor, created by text-to-image deep learning model. 
               The image represetns an ensemble of various musical instruments, each producing its own unique sound wave, 
               converging into a harmonious symphony. This symphony represents the combined predictions of 
@@ -20,7 +21,8 @@ with top_cols[0]:
               represents the consensus prediction. 
               The overall image conveys the concept of multiple regressors working in concert to 
               achieve a more accurate and robust prediction, embodying the collaborative spirit of a Voting Regressor.
-              """)
+              """,
+    )
 
 with top_cols[1]:
     st.markdown(
@@ -40,6 +42,11 @@ with top_cols[1]:
         * 35% weight for Multilayer Perceptron (`MLP`)
         * 15% weight for Regularized Linear Ensemble (`RLE`)
         * 35% weight for Support Vector Ensemble (`SVE`)
+        
+        In case of an estimator yielding an invalid prediction (a negative value of speed), 
+        that estimator is excluded from the ensemble and the weights of remaining voters 
+        are dynamically renormalised so that they sum to 100%, keeping their original
+        proportions.
         
         
         # Performance of base estimators
@@ -117,7 +124,4 @@ with top_cols[2]:
     with col2:
         _, speed = fve.ensemble_predict(query)
         col2.subheader("Final Voting Ensemble predicts", anchor=False)
-        col2.subheader(
-            f"&emsp; :green[{speed:.2f}] km/h", anchor=False
-        )
-
+        col2.subheader(f"&emsp; :green[{speed:.2f}] km/h", anchor=False)

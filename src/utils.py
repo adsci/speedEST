@@ -82,7 +82,7 @@ def get_query() -> pd.DataFrame:
         min_value=900.0,
         max_value=1800.0,
         value=1300.0,
-        step=50.,
+        step=50.0,
     )
     iAng = st.slider(
         "Choose the impact angle [degrees]", min_value=4, max_value=30, value=15, step=1
@@ -117,9 +117,7 @@ def get_query() -> pd.DataFrame:
 
 def print_prediction(base_predictions, ensemble_speed):
     st.subheader("Model prediction is")
-    st.subheader(
-        f"&emsp; :green[{ensemble_speed:.2f}] km/h", anchor=False
-    )
+    st.subheader(f"&emsp; :green[{ensemble_speed:.2f}] km/h", anchor=False)
     v_spacer(2)
     st.subheader("Base estimators", anchor=False)
     st.dataframe(base_predictions)

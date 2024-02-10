@@ -58,7 +58,7 @@ class MLModel:
     def transform_output(self, model_output: np.array) -> float:
         return self.output_transformer.inverse_transform(model_output)
 
-    def predict(self, query: pd.DataFrame) -> float:
+    def predict(self, query: pd.DataFrame) -> tuple[float, bool]:
         input = self.transform_input(query)
         if (
             self.is_pytorch_model
@@ -69,7 +69,7 @@ class MLModel:
         else:
             output = self.model.predict(input).reshape(-1, 1)
         pred = self.transform_output(output).item()
-        return pred
+        return (pred, pred > 0)
 
     def get_name(self):
         return self.name
@@ -245,22 +245,28 @@ class FVE:
     def ensemble_predict(self, query: pd.DataFrame) -> tuple[pd.DataFrame, float]:
         preds = {}
         full_names = {}
-        ens_pred = 0.0
+        pred_array = []
+        weight_array = []
+        # predict with each model,
         for name, ml_model in self.submodels.items():
-            full_names[name] = ml_model.get_name()
-            preds[name] = ml_model.predict(query)
-            ens_pred += preds[name] * self.weights[name]
+            model_prediction, status = ml_model.predict(query)
+            if status:
+                full_names[name] = ml_model.get_name()
+                preds[name] = model_prediction
+                pred_array.append(model_prediction)
+                weight_array.append(self.weights[name])
+
+        # construct numpy arrays and renormalize weights
+        pred_array = np.array(pred_array)
+        weight_array = np.array(weight_array)
+        weight_array /= np.sum(weight_array)
+        ens_pred = np.dot(pred_array, weight_array)
+
         base_preds = pd.DataFrame.from_dict(
             preds, orient="index", columns=["Speed [km/h]"]
         )
         base_preds.index.name = "Base predictor"
-        weights = pd.DataFrame.from_dict(
-            self.weights, orient="index", columns=["Weight [%]"]
-        )
-        base_preds = weights.join(base_preds)
-        base_preds.loc[:, "Weight [%]"] = base_preds.loc[:, "Weight [%]"].apply(lambda x: x*100)
         base_preds.index = base_preds.index.map(full_names)
-        print(base_preds)
         return base_preds, ens_pred
 
     def extract_residuals(self):

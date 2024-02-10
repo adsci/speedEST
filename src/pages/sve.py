@@ -1,7 +1,7 @@
 import streamlit as st
 
 from models import sve
-from utils import make_sidebar, get_query
+from utils import get_query, make_sidebar
 
 st.set_page_config(page_title="speedEST - Support Vector Ensemble", layout="wide")
 top_cols = st.columns([0.3, 0.35, 0.35], gap="large")
@@ -9,8 +9,9 @@ top_cols = st.columns([0.3, 0.35, 0.35], gap="large")
 make_sidebar()
 
 with top_cols[0]:
-    st.image("src/img/models/sve_logo.png",
-             caption="""
+    st.image(
+        "src/img/models/sve_logo.png",
+        caption="""
                Artistic rendition of a support vector regressor, created by text-to-image deep learning model. 
                In this image, the central element is a glowing, meandering river that acts as the regression line, 
                cutting through the terrain to represent the SVR's methodology of fitting a model within 
@@ -19,7 +20,8 @@ with top_cols[0]:
                to depict the epsilon-insensitive loss function used in SVR.  
                The landscape merges the natural world's beauty with the structured precision of machine learning, 
                illustrating the SVR's predictive prowess in an aesthetically pleasing and conceptual form.
-               """)
+               """,
+    )
 
 with top_cols[1]:
     st.markdown(
@@ -255,7 +257,6 @@ with top_cols[1]:
     with tab2:
         st.altair_chart(sve.get_residual_PDF(), use_container_width=True)
 
-
     st.markdown(
         """
         ## References
@@ -277,8 +278,9 @@ with top_cols[2]:
     with col1:
         query = get_query()
     with col2:
-        speed = sve.predict(query)
+        speed, status = sve.predict(query)
         col2.subheader(f"{sve.get_name()} predicts", anchor=False)
-        col2.subheader(
-            f"&emsp; :green[{speed:.2f}] km/h", anchor=False
-        )
+        if status:
+            col2.subheader(f"&emsp; :green[{speed:.2f}] km/h", anchor=False)
+        else:
+            col2.subheader(f"&emsp; :red[invalid prediction]", anchor=False)

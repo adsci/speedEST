@@ -1,7 +1,7 @@
 import streamlit as st
 
 from models import mlp
-from utils import make_sidebar, get_query
+from utils import get_query, make_sidebar
 
 st.set_page_config(page_title="speedEST - Multilayer Perceptron", layout="wide")
 top_cols = st.columns([0.3, 0.35, 0.35], gap="large")
@@ -9,15 +9,17 @@ top_cols = st.columns([0.3, 0.35, 0.35], gap="large")
 make_sidebar()
 
 with top_cols[0]:
-    st.image("src/img/models/mlp_logo.png",
-             caption="""
+    st.image(
+        "src/img/models/mlp_logo.png",
+        caption="""
              Artistic rendition of a neural network, created by text-to-image deep learning model. 
              The image features the neurons organized in a lines, distinct, horizontal layers, and ending with a single neuron, 
              symbolizing the output layer. Each neuron is be depicted as a radiant, spherical node, 
              with glowing connections to other neurons, representing the synaptic pathways. 
              The layers should are clearly differentiated with different colors or luminosities, 
              and the final neuron should is distinct, larger and more vibrant, indicating its role as the final output. 
-             """)
+             """,
+    )
 
 with top_cols[1]:
     st.markdown(
@@ -213,8 +215,9 @@ with top_cols[2]:
     with col1:
         query = get_query()
     with col2:
-        speed = mlp.predict(query)
+        speed, status = mlp.predict(query)
         col2.subheader(f"{mlp.get_name()} predicts", anchor=False)
-        col2.subheader(
-            f"&emsp; :green[{speed:.2f}] km/h", anchor=False
-        )
+        if status:
+            col2.subheader(f"&emsp; :green[{speed:.2f}] km/h", anchor=False)
+        else:
+            col2.subheader(f"&emsp; :red[invalid prediction]", anchor=False)
