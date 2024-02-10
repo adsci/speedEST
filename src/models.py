@@ -6,6 +6,10 @@ import numpy as np
 import pandas as pd
 import torch
 
+# TODO: remove after testing
+import warnings
+warnings.filterwarnings('ignore')
+
 
 def load_pickle(path, format="pickle"):
     with open(path, "rb") as f:

@@ -76,12 +76,13 @@ def print_additional_info():
 
 
 def get_query() -> pd.DataFrame:
-    vMass = st.number_input(
+    st.subheader("Define impact parameters")
+    vMass = st.slider(
         "Enter the mass of the vehicle, including the mass of occupants [kg]",
         min_value=900.0,
         max_value=1800.0,
         value=1300.0,
-        step=1.0,
+        step=50.,
     )
     iAng = st.slider(
         "Choose the impact angle [degrees]", min_value=4, max_value=30, value=15, step=1
