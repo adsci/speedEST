@@ -5,5 +5,4 @@
 		"context": ".."
 	},
 	"appPort": 8501,
-	"postCreateCommand": ["apt-get update", "apt-get install -y git"]
 }

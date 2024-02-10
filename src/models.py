@@ -191,7 +191,7 @@ class FVE():
         return self.metrics
 
 
-
-submodels = {'TRE': TRE(), 'MLP': MLP(), 'RLE': RLE(), 'SVE': SVE()}
+tre, mlp, rle, sve = TRE(), MLP(), RLE(), SVE()
+submodels = {'TRE': tre, 'MLP': mlp, 'RLE': rle, 'SVE': sve}
 weights = {'TRE': 0.15, 'MLP': 0.35, 'RLE': 0.15, 'SVE': 0.35}
 fve = FVE(submodels, weights)
