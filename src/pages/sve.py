@@ -4,30 +4,28 @@ from models import sve
 from utils import get_query, make_sidebar
 
 st.set_page_config(page_title="speedEST - Support Vector Ensemble", layout="wide")
-top_cols = st.columns([0.3, 0.35, 0.35], gap="large")
+top_cols = st.columns([0.5, 0.5], gap="large")
 
 make_sidebar()
 
 with top_cols[0]:
+    st.title("Support Vector Ensemble(`SVE`)")
+
     st.image(
         "src/img/models/sve_logo.png",
         caption="""
-               Artistic rendition of a support vector regressor, created by text-to-image deep learning model. 
+               Image representation of a support vector regressor, created by text-to-image deep learning model. 
                In this image, the central element is a glowing, meandering river that acts as the regression line, 
                cutting through the terrain to represent the SVR's methodology of fitting a model within 
                a dataset while minimizing error. The riverbanks are lined with glowing orbs or stones, 
                symbolizing the data points, with some nestled within a soft margin on either side of the river 
                to depict the epsilon-insensitive loss function used in SVR.  
-               The landscape merges the natural world's beauty with the structured precision of machine learning, 
-               illustrating the SVR's predictive prowess in an aesthetically pleasing and conceptual form.
                """,
+        width=500
     )
 
-with top_cols[1]:
     st.markdown(
         """
-        # Support Vector Ensemble(`SVE`)
-    
         The Support Vector Ensemble model [1] is an ensemble estimator that uses several 
         base regressors and averages their prediction to form a final prediction. 
         This particular model considers support vector machines (support vector regressors) 
@@ -272,7 +270,7 @@ with top_cols[1]:
         """
     )
 
-with top_cols[2]:
+with top_cols[1]:
     st.markdown("# Use the model")
     col1, col2 = st.columns(2)
     with col1:

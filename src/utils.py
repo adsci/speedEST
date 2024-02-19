@@ -15,7 +15,7 @@ def read_version(path="VERSION"):
 def make_sidebar():
     with st.sidebar:
         st.image("src/img/logo.png")
-        v_spacer(3)
+        v_spacer(1)
         st.page_link("Home.py", label="Home")
         st.page_link("pages/data.py", label=":blue[__Data__]")
         st.page_link("pages/ml_models.py", label=":blue[__Models__]")
@@ -25,7 +25,7 @@ def make_sidebar():
         st.page_link("pages/sve.py", label=":orange[\4 Support Vector Ensemble]")
         st.page_link("pages/fve.py", label=":orange[\5 Final Voting Ensemble]")
         st.page_link("pages/about_project.py", label=":blue[__About the project__]")
-        v_spacer(15)
+        v_spacer(5)
         st.text(f"speedEST v{read_version()}")
         st.text("Copyright (c) 2022-2024 \n Gdańsk University of Technology")
         st.text("Data acquisition by\n Dawid Bruski\n Łukasz Pachocki")
@@ -42,8 +42,7 @@ def print_welcome_info():
         """
         __speedEST__ is an online app showcasing a data-driven approach
         to estimating vehicle speed at impact with a steel road barrier.
-
-        speedEST comprises a collection of machine learning models ready
+        The dashboard comprises a collection of machine learning models ready
         for prediction. 
         """
     )
@@ -67,6 +66,7 @@ def print_additional_info():
     st.write("### Resources")
     st.link_button("Source code", "https://github.com/adsci/speedEST")
     st.link_button("Publication", "https://doi.org/10.1016/j.advengsoft.2023.103502")
+    v_spacer(2)
     st.write("### Miscellaneous")
     st.link_button("CACM", "https://wilis.pg.edu.pl/en/cacm")
     st.link_button(

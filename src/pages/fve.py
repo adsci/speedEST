@@ -4,31 +4,28 @@ from models import fve
 from utils import get_query, make_sidebar
 
 st.set_page_config(page_title="speedEST - Final Voting Ensemble", layout="wide")
-top_cols = st.columns([0.3, 0.35, 0.35], gap="large")
+top_cols = st.columns([0.5, 0.5], gap="large")
 
 make_sidebar()
 
 with top_cols[0]:
+    st.title("Final Voting Ensemble model (`FVE`)")
+
     st.image(
         "src/img/models/fve_logo.png",
         caption="""
-              Artistic rendition of a voting regressor, created by text-to-image deep learning model. 
-              The image represetns an ensemble of various musical instruments, each producing its own unique sound wave, 
+              Image representation of a voting regressor, created by text-to-image deep learning model. 
+              The image represents an ensemble of various musical instruments, each producing its own unique sound wave, 
               converging into a harmonious symphony. This symphony represents the combined predictions of 
               different regression models working together as a Voting Regressor. 
-              The instruments are set along a ling, symbolizing the collaborative decision-making process, 
-              with their sound waves visually merging into a central, clearer, and more defined wave that 
-              represents the consensus prediction. 
               The overall image conveys the concept of multiple regressors working in concert to 
               achieve a more accurate and robust prediction, embodying the collaborative spirit of a Voting Regressor.
               """,
+        width=500
     )
 
-with top_cols[1]:
     st.markdown(
         """
-        # Final Voting Ensemble model (`FVE`)
-    
         All individual models can be used independently with the given performance metrics. 
         However, as they are already trained, they can also be used as base estimators in 
         a voting ensemble, which will average their predictions. 
@@ -116,7 +113,7 @@ with top_cols[1]:
 
     st.dataframe(fve.get_metrics().style.format("{:.3f}"))
 
-with top_cols[2]:
+with top_cols[1]:
     st.markdown("# Use the model")
     col1, col2 = st.columns(2)
     with col1:

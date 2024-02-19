@@ -4,32 +4,29 @@ from models import rle
 from utils import get_query, make_sidebar
 
 st.set_page_config(page_title="speedEST - Regularized Linear Ensemble", layout="wide")
-top_cols = st.columns([0.3, 0.35, 0.35], gap="large")
+top_cols = st.columns([0.5, 0.5], gap="large")
 
 make_sidebar()
 
 with top_cols[0]:
+    st.title("Regularized Linear Ensemble(`RLE`)")
+
     st.image(
         "src/img/models/rle_logo.png",
         caption="""
-              Artistic rendition of a linear model, created by text-to-image deep learning model. 
+              Image representation of a linear model, created by text-to-image deep learning model. 
               The visualization depicts a linear equation as the central theme, with coefficients 
-              being regularized by both lasso and ridge techniques. 
-              For lasso regression, coefficients shrinking to zero are shown, symbolized by some 
-              coefficients fading away or becoming transparent. 
-              For ridge regression, coefficients are getting smaller but not disappearing, 
-              which is symbolized by them diminishing in size. 
-              These concepts are be represented on a coordinate plane, with a fitting line passing through 
-              data points to signify the model's predictions. 
+              being regularized by both lasso (coefficients fading away/becoming transparent) and ridge
+              (coefficients diminishing in size) techniques. 
               This image artistically conveys the concepts of constraint and optimization 
               inherent in these regression techniques.
               """,
+        width=500
     )
 
-with top_cols[1]:
     st.markdown(
         """
-        # Regularized Linear Ensemble(`RLE`)
+        # 
     
         The Regularized Linear Ensemble model [1] is an ensemble estimator that uses several 
         base regressors and averages their prediction to form a final prediction. 
@@ -276,7 +273,7 @@ with top_cols[1]:
         """
     )
 
-with top_cols[2]:
+with top_cols[1]:
     st.markdown("# Use the model")
     col1, col2 = st.columns(2)
     with col1:

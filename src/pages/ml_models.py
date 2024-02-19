@@ -2,7 +2,7 @@ import streamlit as st
 
 from utils import make_sidebar, v_spacer
 
-WIDTH = 450
+WIDTH = 350
 st.set_page_config(page_title="speedEST - Models", layout="wide")
 
 make_sidebar()

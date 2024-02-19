@@ -4,29 +4,28 @@ from models import tre
 from utils import get_query, make_sidebar
 
 st.set_page_config(page_title="speedEST - Tree Ensemble", layout="wide")
-top_cols = st.columns([0.3, 0.35, 0.35], gap="large")
+top_cols = st.columns([0.5, 0.5], gap="large")
 
 make_sidebar()
 
 with top_cols[0]:
+    st.title("Tree Ensemble model (`TRE`)")
+
     st.image(
         "src/img/models/tre_logo.png",
         caption="""
-                Artistic rendition of random forest and gradient boosted regression, 
+                Image representation of random forest and gradient boosted regression, 
                 created by text-to-image deep learning model. 
                 A digital landscape is presented, where numerous decision trees are rooted, 
                 each more detailed with visible branches to emphasize the decision-making paths 
                 of the random forest algorithm. The gradient boosting manifests as luminous green trails 
                 weaving through the trees, showcasing the algorithm's iterative improvements. 
                 """,
+        width=500
     )
 
-with top_cols[1]:
     st.markdown(
         """
-        # Tree Ensemble model (`TRE`)
-    
-    
         The Tree Ensemble model [1, 2] is an ensemble estimator that uses several base regressors 
         and averages their prediction to form a final prediction. 
         This particular model includes an extremely randomized forest [3,4], 
@@ -232,7 +231,7 @@ with top_cols[1]:
         """
     )
 
-with top_cols[2]:
+with top_cols[1]:
     st.markdown("# Use the model")
     col1, col2 = st.columns(2)
     with col1:

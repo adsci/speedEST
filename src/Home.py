@@ -7,7 +7,7 @@ st.set_page_config(page_title="speedEST - Home", layout="wide")
 
 utils.make_sidebar()
 
-top_cols = st.columns([0.2, 0.4, 0.2, 0.2], gap="large")
+top_cols = st.columns([0.2, 0.4, 0.4], gap="large")
 with top_cols[0]:
     utils.print_welcome_info()
 
@@ -22,6 +22,3 @@ with top_cols[1]:
 with top_cols[2]:
     if clicked:
         utils.print_prediction(base_preds, ensemble_speed)
-
-with top_cols[3]:
-    utils.print_additional_info()

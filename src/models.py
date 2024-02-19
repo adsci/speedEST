@@ -6,7 +6,6 @@ import numpy as np
 import pandas as pd
 import torch
 
-
 def load_pickle(path, format="pickle"):
     with open(path, "rb") as f:
         if format == "dill":
