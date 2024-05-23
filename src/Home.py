@@ -1,15 +1,22 @@
 import streamlit as st
+from streamlit_theme import st_theme
 
 import utils
 from models import fve
 
 st.set_page_config(page_title="speedEST - Home", layout="wide")
 
-utils.make_sidebar()
+theme_dict = st_theme()
+if theme_dict:
+    theme = theme_dict["base"]
+else:
+    theme = "light"
+utils.make_sidebar(theme)
 
 top_cols = st.columns([0.2, 0.4, 0.4], gap="large")
 with top_cols[0]:
     utils.print_welcome_info()
+    st.write(theme_dict)
 
 with top_cols[1]:
     query = utils.get_query()

@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_theme import st_theme
 
 from models import rle
 from utils import get_query, make_sidebar
@@ -6,7 +7,12 @@ from utils import get_query, make_sidebar
 st.set_page_config(page_title="speedEST - Regularized Linear Ensemble", layout="wide")
 top_cols = st.columns([0.5, 0.5], gap="large")
 
-make_sidebar()
+theme_dict = st_theme()
+if theme_dict:
+    theme = theme_dict["base"]
+else:
+    theme = "light"
+make_sidebar(theme)
 
 with top_cols[0]:
     st.title("Regularized Linear Ensemble(`RLE`)")

@@ -12,9 +12,12 @@ def read_version(path="VERSION"):
         return f.read().strip()
 
 
-def make_sidebar():
+def make_sidebar(theme="light"):
     with st.sidebar:
-        st.image("src/img/logo.png")
+        if theme == "light":
+            st.image("src/img/logo_small_light.png")
+        elif theme == "dark":
+            st.image("src/img/logo_small_dark.png")
         v_spacer(1)
         st.page_link("Home.py", label="Home")
         st.page_link("pages/data.py", label=":blue[__Data__]")
@@ -28,8 +31,8 @@ def make_sidebar():
         v_spacer(5)
         st.text(f"speedEST v{read_version()}")
         st.text("Copyright (c) 2022-2024 \n Gdańsk University of Technology")
-        st.text("Data acquisition by\n Dawid Bruski\n Łukasz Pachocki")
         st.text("Models and dashboard by\n Adam Ścięgaj")
+        st.text("Data acquisition by\n Dawid Bruski\n Łukasz Pachocki")
 
 
 def print_welcome_info():
