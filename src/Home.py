@@ -1,6 +1,10 @@
 import streamlit as st
 from streamlit_theme import st_theme
 
+# hack for KeyError: 'warnings' on rerun
+import warnings
+warnings.filterwarnings('ignore')
+
 import utils
 from models import fve
 
