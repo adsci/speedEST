@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_theme import st_theme
 
-from utils import make_sidebar, print_additional_info
+from utils import make_sidebar, print_additional_info, LOGO_LIGHT, LOGO_DARK
 
 st.set_page_config(page_title="speedEST - About the Project", layout="wide")
 
@@ -19,9 +19,9 @@ with top_cols[0]:
 
 with top_cols[1]:
     if theme == "light":
-        st.image("src/img/logo_large_light.png", width=600)
+        st.image(LOGO_LIGHT, width=600)
     elif theme == "dark":
-        st.image("src/img/logo_large_dark.png", width=600)
+        st.image(LOGO_DARK, width=600)
 
     st.markdown(
         """

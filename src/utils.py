@@ -1,6 +1,13 @@
 import pandas as pd
 import streamlit as st
+# hack for KeyError: 'warnings' on rerun
+import warnings
+warnings.filterwarnings('ignore')
 
+LOGO_SIDEBAR_DARK = "src/img/logo/logo_small_dark.png"
+LOGO_SIDEBAR_LIGHT = "src/img/logo/logo_small_light.png"
+LOGO_DARK = "src/img/logo/logo_large_dark.png"
+LOGO_LIGHT = "src/img/logo/logo_large_light.png"
 
 def v_spacer(height) -> None:
     for _ in range(height):
@@ -15,10 +22,9 @@ def read_version(path="VERSION"):
 def make_sidebar(theme="light"):
     with st.sidebar:
         if theme == "light":
-            st.image("src/img/logo_small_light.png")
+            st.logo(LOGO_SIDEBAR_LIGHT, icon_image=LOGO_LIGHT)
         elif theme == "dark":
-            st.image("src/img/logo_small_dark.png")
-        v_spacer(1)
+            st.logo(LOGO_SIDEBAR_DARK, icon_image=LOGO_DARK)
         st.page_link("Home.py", label="Home")
         st.page_link("pages/data.py", label=":blue[__Data__]")
         st.page_link("pages/ml_models.py", label=":blue[__Models__]")

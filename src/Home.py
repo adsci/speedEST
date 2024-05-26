@@ -16,7 +16,6 @@ utils.make_sidebar(theme)
 top_cols = st.columns([0.2, 0.4, 0.4], gap="large")
 with top_cols[0]:
     utils.print_welcome_info()
-    st.write(theme_dict)
 
 with top_cols[1]:
     query = utils.get_query()
