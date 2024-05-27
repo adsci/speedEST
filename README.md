@@ -1,4 +1,4 @@
- ![](src/img/logo.png)
+ ![](src/img/logo/logo_large_light.png)
 
 # Vehicle impact speed estimation using machine learning
 
