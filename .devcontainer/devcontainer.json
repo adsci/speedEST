@@ -1,7 +1,7 @@
 {
 	"name": "speedEST-dev",
 	"build": {
-		"dockerfile": "Dockerfile",
+		"dockerfile": "../Dockerfile",
 		"context": ".."
 	},
 	"appPort": 8501,

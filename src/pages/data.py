@@ -1,10 +1,16 @@
 import streamlit as st
+from streamlit_theme import st_theme
 
 from utils import make_sidebar
 
 st.set_page_config(page_title="speedEST - Data", layout="centered")
 
-make_sidebar()
+theme_dict = st_theme()
+if theme_dict:
+    theme = theme_dict["base"]
+else:
+    theme = "light"
+make_sidebar(theme)
 
 st.markdown(
     """

@@ -1,10 +1,16 @@
 import streamlit as st
+from streamlit_theme import st_theme
 
-from utils import make_sidebar, print_additional_info
+from utils import make_sidebar, print_additional_info, LOGO_LIGHT, LOGO_DARK
 
 st.set_page_config(page_title="speedEST - About the Project", layout="wide")
 
-make_sidebar()
+theme_dict = st_theme()
+if theme_dict:
+    theme = theme_dict["base"]
+else:
+    theme = "light"
+make_sidebar(theme)
 
 top_cols = st.columns([0.25, 0.5, 0.25])
 
@@ -12,7 +18,11 @@ with top_cols[0]:
     print_additional_info()
 
 with top_cols[1]:
-    st.image("src/img/logo.png", width=600)
+    if theme == "light":
+        st.image(LOGO_LIGHT, width=600)
+    elif theme == "dark":
+        st.image(LOGO_DARK, width=600)
+
     st.markdown(
         """
         # Methods for speed estimation of a vehicle at impact with a road safety barrier

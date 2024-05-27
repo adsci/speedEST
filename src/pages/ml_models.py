@@ -1,11 +1,17 @@
 import streamlit as st
+from streamlit_theme import st_theme
 
 from utils import make_sidebar, v_spacer
 
 WIDTH = 350
 st.set_page_config(page_title="speedEST - Models", layout="wide")
 
-make_sidebar()
+theme_dict = st_theme()
+if theme_dict:
+    theme = theme_dict["base"]
+else:
+    theme = "light"
+make_sidebar(theme)
 
 top_cols = st.columns([0.3, 0.3, 0.3], gap="large")
 
