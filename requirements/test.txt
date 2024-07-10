@@ -22,8 +22,6 @@ charset-normalizer==3.3.2
     # via requests
 click==8.1.7
     # via streamlit
-coverage==7.5.4
-    # via -r requirements/test.in
 dill==0.3.8
     # via -r requirements/base.in
 feature-engine==1.6.2

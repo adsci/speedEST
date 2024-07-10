@@ -20,11 +20,11 @@ def read_version(path="VERSION"):
         return f.read().strip()
 
 
-def get_segment_bounds(n_poles: int) -> Tuple[int,int]:
+def get_segment_bounds(n_poles: int) -> Tuple[int, int]:
     lower = math.ceil((n_poles-3)/2)
     upper = math.floor((n_poles+3)/2)
 
-    return (max(0, lower),  upper)
+    return max(0, lower),  upper
 
 
 def make_sidebar(theme="light"):
@@ -93,6 +93,9 @@ def print_additional_info():
 
 
 def get_query() -> pd.DataFrame:
+    """
+    Reads user input and returns the corresponding model query
+    """
     st.subheader("Define impact parameters")
     vMass = st.slider(
         "Enter the mass of the vehicle, including the mass of occupants [kg]",
@@ -127,9 +130,23 @@ def get_query() -> pd.DataFrame:
         value=int((nSeg_lower + nSeg_upper)/2),
     )
 
-    feats = ["vehicleMass", "impactAngle", "finalDisp", "nPoles", "nSegments"]
-    query = pd.DataFrame([map(float, [vMass, iAng, fDisp, nP, nSeg])], columns=feats)
+    return preprocess_raw_input(vMass, iAng, fDisp, nP, nSeg)
 
+
+def preprocess_raw_input(v_mass: float, i_ang: int, f_disp: float, n_posts: int, n_seg: int) -> pd.DataFrame:
+    """
+    Transforms user input into pandas DataFrame format, which is required by the models.
+
+    :param v_mass: Vehicle mass [kg]
+    :param i_ang: Impact angle [degrees]
+    :param f_disp: Final laterral displacement of the guardrail [mm]
+    :param n_posts: Number of damaged guardrail posts
+    :param n_seg: Number of dagamed guardrail segments
+
+    :return query: Query dataframe accepted by the models
+    """
+    feats = ["vehicleMass", "impactAngle", "finalDisp", "nPoles", "nSegments"]
+    query = pd.DataFrame([map(float, [v_mass, i_ang, f_disp, n_posts, n_seg])], columns=feats)
     return query
 
 
