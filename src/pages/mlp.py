@@ -21,11 +21,13 @@ with top_cols[0]:
         "src/img/models/mlp_logo.png",
         caption="""
                  Image representation of a neural network, created by text-to-image deep learning model.
-                 The image features the neurons organized in a lines, distinct, horizontal layers, and ending with a single neuron,
-                 symbolizing the output layer. Each neuron is be depicted as a radiant, spherical node,
+                 The image features the neurons organized in a lines, distinct, horizontal layers,
+                 and ending with a single neuron, symbolizing the output layer.
+                 Each neuron is be depicted as a radiant, spherical node,
                  with glowing connections to other neurons, representing the synaptic pathways.
                  The layers should are clearly differentiated with different colors or luminosities,
-                 and the final neuron should is distinct, larger and more vibrant, indicating its role as the final output.
+                 and the final neuron should is distinct, larger and more vibrant, indicating its role as the final
+                 output.
                  """,
         width=500
     )
@@ -155,7 +157,7 @@ with top_cols[0]:
 
         Loss function value and the MAE for training and validations sets are plotted below.
         Note that these are the mean values over all validation and training sets.
-        """
+        """  # noqa: E501
     )
 
     tab1, tab2 = st.tabs(["Loss", "Mean Absolute Error"])
@@ -226,4 +228,4 @@ with top_cols[1]:
         if status:
             col2.subheader(f"&emsp; :green[{speed:.2f}] km/h", anchor=False)
         else:
-            col2.subheader(f"&emsp; :red[invalid prediction]", anchor=False)
+            col2.subheader("&emsp; :red[invalid prediction]", anchor=False)

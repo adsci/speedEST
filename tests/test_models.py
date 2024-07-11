@@ -1,6 +1,7 @@
 import pytest
 from src.utils import preprocess_raw_input
 
+
 class TestModelLoad:
     @pytest.mark.parametrize("model_name",
                              ["tre",
@@ -39,7 +40,8 @@ class TestModelPredictions:
                              ])
     def test_ensemble_prediction(self, input):
         module = __import__("src.models", fromlist=["fve"])
-        model = getattr(module, "fve")
+        model = "fve"
+        model = getattr(module, model)
 
         query = preprocess_raw_input(*input)
         _, prediction = model.ensemble_predict(query)

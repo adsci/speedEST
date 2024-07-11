@@ -220,7 +220,7 @@ with top_cols[0]:
         The values of the MAE and $R^2$ for the training, validation and test
         sets are summarised in the table below. For the validation set,
         the values represent the mean and standard deviation over all random splits.
-        """
+        """  # noqa: E501
     )
 
     st.dataframe(rle.get_metrics().style.format("{:.3f}"))
@@ -290,4 +290,4 @@ with top_cols[1]:
         if status:
             col2.subheader(f"&emsp; :green[{speed:.2f}] km/h", anchor=False)
         else:
-            col2.subheader(f"&emsp; :red[invalid prediction]", anchor=False)
+            col2.subheader("&emsp; :red[invalid prediction]", anchor=False)

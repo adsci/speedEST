@@ -10,6 +10,7 @@ LOGO_LIGHT = "src/img/logo/logo_large_light.png"
 LOGO_ICON_LIGHT = "src/img/logo/logo_icon_light.png"
 LOGO_ICON_DARK = "src/img/logo/logo_icon_dark.png"
 
+
 def v_spacer(height) -> None:
     for _ in range(height):
         st.write("\n")

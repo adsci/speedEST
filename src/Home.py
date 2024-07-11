@@ -1,12 +1,11 @@
 import streamlit as st
 from streamlit_theme import st_theme
-
-# hack for KeyError: 'warnings' on rerun
 import warnings
-warnings.filterwarnings('ignore')
-
 import utils
 from models import fve
+
+# hack for KeyError: 'warnings' on rerun
+warnings.filterwarnings('ignore')
 
 st.set_page_config(page_title="speedEST - Home", layout="wide")
 

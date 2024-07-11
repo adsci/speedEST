@@ -173,7 +173,7 @@ with top_cols[0]:
         The values of the MAE and $R^2$ for the training, validation and test sets
         are summarised in the table below. For the validation set, the values represent
         the mean and standard deviation over all random splits.
-        """
+        """  # noqa: E501
     )
 
     st.dataframe(tre.get_metrics().style.format("{:.3f}"))
@@ -234,7 +234,7 @@ with top_cols[0]:
 
         10. Géron, A. (2019). Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow:
         Concepts, Tools, and Techniques to Build Intelligent Systems. (2nd ed.). O’Reilly.
-        """
+        """  # noqa: E501
     )
 
 with top_cols[1]:
@@ -248,4 +248,4 @@ with top_cols[1]:
         if status:
             col2.subheader(f"&emsp; :green[{speed:.2f}] km/h", anchor=False)
         else:
-            col2.subheader(f"&emsp; :red[invalid prediction]", anchor=False)
+            col2.subheader("&emsp; :red[invalid prediction]", anchor=False)
