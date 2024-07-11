@@ -2,7 +2,7 @@
 
 # Vehicle impact speed estimation using machine learning
 
-This tool can be used to estimate the speed of the vehicle at impact with a steel road safety barrier. 
+This tool can be used to estimate the speed of the vehicle at impact with a steel road safety barrier.
 The estimation is made by a few different machine learning model, which were trained on both full-scale crash tests and numerical simulation.
 The app consists of the following parts:
 
@@ -16,7 +16,7 @@ The app consists of the following parts:
 * __About the project__ - summary of the research project
 # Demonstration
 
-For the purpose of demonstration, the app is deployed 
+For the purpose of demonstration, the app is deployed
 [here](http://speedest.pl)
 
 # Installation
@@ -29,5 +29,5 @@ Run the Docker container with
 
 `docker run -p 80:8501 speedest:latest`
 
-The app can then be accessed at 
+The app can then be accessed at
 [localhost](http://localhost)

@@ -60,20 +60,20 @@ def print_welcome_info():
         __speedEST__ is an online app showcasing a data-driven approach
         to estimating vehicle speed at impact with a steel road barrier.
         The dashboard comprises a collection of machine learning models ready
-        for prediction. 
+        for prediction.
         """
     )
     v_spacer(2)
     st.info(
         """
-        To get a prediction, input the required parameters on the right 
+        To get a prediction, input the required parameters on the right
         and click on the "Estimate vehicle speed" button.
         """
     )
     v_spacer(2)
     st.warning(
         """
-        To get more information about the data, machine learning models and the project, 
+        To get more information about the data, machine learning models and the project,
         choose a page from the side menu.
         """
     )
