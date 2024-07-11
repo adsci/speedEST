@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y procps
 
 COPY requirements/base.txt .
 RUN pip install --upgrade pip && pip install --no-cache-dir -r base.txt
-ENV PYTHONPATH "/"
+ENV PYTHONPATH="/"
 
 COPY src/ ./src/
 COPY .streamlit ./.streamlit
