@@ -59,5 +59,3 @@ with top_cols[1]:
         https://doi.org/10.1016/j.advengsoft.2023.103502
         """
     )
-
-

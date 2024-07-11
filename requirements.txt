@@ -1,9 +1,0 @@
-streamlit==1.35.0
-st-theme==1.2.3
-pandas==2.2.2
-numpy==1.26.4
-dill==0.3.8
-scikit-learn==1.4.0
-feature-engine==1.6.2
---extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.3.0
