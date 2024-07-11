@@ -27,7 +27,7 @@ with top_cols[0]:
               This image artistically conveys the concepts of constraint and optimization
               inherent in these regression techniques.
               """,
-        width=500
+        width=500,
     )
 
     st.markdown(

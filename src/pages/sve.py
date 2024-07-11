@@ -27,7 +27,7 @@ with top_cols[0]:
                symbolizing the data points, with some nestled within a soft margin on either side of the river
                to depict the epsilon-insensitive loss function used in SVR.
                """,
-        width=500
+        width=500,
     )
 
     st.markdown(

@@ -27,7 +27,7 @@ with top_cols[0]:
                 of the random forest algorithm. The gradient boosting manifests as luminous green trails
                 weaving through the trees, showcasing the algorithm's iterative improvements.
                 """,
-        width=500
+        width=500,
     )
 
     st.markdown(

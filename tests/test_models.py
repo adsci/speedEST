@@ -4,12 +4,7 @@ from src.utils import preprocess_raw_input
 
 
 class TestModelLoad:
-    @pytest.mark.parametrize("model_name",
-                             ["tre",
-                              "mlp",
-                              "rle",
-                              "sve",
-                              "fve"])
+    @pytest.mark.parametrize("model_name", ["tre", "mlp", "rle", "sve", "fve"])
     def test_import_model(self, model_name):
         try:
             module = __import__("src.models", fromlist=[model_name])
@@ -19,13 +14,15 @@ class TestModelLoad:
 
 
 class TestModelPredictions:
-    @pytest.mark.parametrize("model_name, input",
-                             [
-                                 ("tre", [1300, 17, 800, 2, 1]),
-                                 ("mlp", [1300, 17, 800, 2, 1]),
-                                 ("rle", [1300, 17, 800, 2, 1]),
-                                 ("sve", [1300, 17, 800, 2, 1])
-                             ])
+    @pytest.mark.parametrize(
+        "model_name, input",
+        [
+            ("tre", [1300, 17, 800, 2, 1]),
+            ("mlp", [1300, 17, 800, 2, 1]),
+            ("rle", [1300, 17, 800, 2, 1]),
+            ("sve", [1300, 17, 800, 2, 1]),
+        ],
+    )
     def test_model_prediction(self, model_name, input):
         module = __import__("src.models", fromlist=[model_name])
         model = getattr(module, model_name)
@@ -35,10 +32,7 @@ class TestModelPredictions:
         assert flag
         assert 70 <= prediction <= 150
 
-    @pytest.mark.parametrize("input",
-                             [
-                                 ([1300, 17, 800, 2, 1])
-                             ])
+    @pytest.mark.parametrize("input", [([1300, 17, 800, 2, 1])])
     def test_ensemble_prediction(self, input):
         module = __import__("src.models", fromlist=["fve"])
         model = "fve"

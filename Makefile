@@ -3,6 +3,7 @@
 clean:
 	rm -rf .tox/
 	rm -rf test-reports/
+	rm -rf .pytest_cache/
 
 install-requirements-dev: clean
 	python -m pip install -r requirements/dev.txt

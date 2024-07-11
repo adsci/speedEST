@@ -7,7 +7,7 @@ import utils
 from models import fve
 
 # hack for KeyError: 'warnings' on rerun
-warnings.filterwarnings('ignore')
+warnings.filterwarnings("ignore")
 
 st.set_page_config(page_title="speedEST - Home", layout="wide")
 

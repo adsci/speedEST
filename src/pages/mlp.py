@@ -29,7 +29,7 @@ with top_cols[0]:
                  and the final neuron should is distinct, larger and more vibrant, indicating its role as the final
                  output.
                  """,
-        width=500
+        width=500,
     )
 
     st.markdown(

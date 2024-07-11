@@ -27,7 +27,7 @@ with top_cols[0]:
               The overall image conveys the concept of multiple regressors working in concert to
               achieve a more accurate and robust prediction, embodying the collaborative spirit of a Voting Regressor.
               """,
-        width=500
+        width=500,
     )
 
     st.markdown(
