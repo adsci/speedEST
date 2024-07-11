@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_theme import st_theme
 
-from utils import make_sidebar, print_additional_info, LOGO_LIGHT, LOGO_DARK
+from utils import LOGO_DARK, LOGO_LIGHT, make_sidebar, print_additional_info
 
 st.set_page_config(page_title="speedEST - About the Project", layout="wide")
 

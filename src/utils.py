@@ -1,7 +1,8 @@
+import math
+from typing import Tuple
+
 import pandas as pd
 import streamlit as st
-from typing import Tuple
-import math
 
 LOGO_SIDEBAR_DARK = "src/img/logo/logo_small_dark.png"
 LOGO_SIDEBAR_LIGHT = "src/img/logo/logo_small_light.png"

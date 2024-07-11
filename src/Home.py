@@ -1,6 +1,8 @@
+import warnings
+
 import streamlit as st
 from streamlit_theme import st_theme
-import warnings
+
 import utils
 from models import fve
 

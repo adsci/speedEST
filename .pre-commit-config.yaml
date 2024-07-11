@@ -28,3 +28,8 @@ repos:
       - id: flake8
         additional_dependencies: [ flake8_formatter_junit_xml ]
         args: [ --format, junit-xml, --tee, --output-file, test-reports/junit-flake8.xml ]
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
