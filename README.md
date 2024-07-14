@@ -3,7 +3,7 @@
 # Vehicle impact speed estimation using machine learning
 
 This tool can be used to estimate the speed of the vehicle at impact with a steel road safety barrier.
-The estimation is made by a few different machine learning model, which were trained on both full-scale crash tests 
+The estimation is made by a few different machine learning model, which were trained on both full-scale crash tests
 and numerical simulations. The app consists of the following pages:
 
 * __Home__ - main page with prediction of the impact speed for a given set of input features
@@ -24,7 +24,7 @@ The latest version app can is deployed [here](http://speedest.pl).
 ## Local
 For local use, production-ready docker images are available
 in the [DockerHub repository](https://hub.docker.com/r/adsci/speedest).
-To run it, first make sure that Docker is installed on your system. 
+To run it, first make sure that Docker is installed on your system.
 Then, pull the Docker image :
 
 ```bash
@@ -46,9 +46,9 @@ After the container has started, the app can then be accessed at
 ## Building the Docker image
 
 Docker images present in the [DockerHub repository](https://hub.docker.com/r/adsci/speedest)
-support only the (`linux/amd64`) architecture, i.e., 
-most Linux and Windows machines. 
-For other architectures, such as ARM (e.g., newer Apple machines), 
+support only the (`linux/amd64`) architecture, i.e.,
+most Linux and Windows machines.
+For other architectures, such as ARM (e.g., newer Apple machines),
 it may be necessary to build and run the image locally
 
 ```bash
@@ -58,8 +58,8 @@ docker run -p 80:8501 speedest:latest
 
 ## How to prepare local environment?
 
-It is recommended to prepare a virtual environment for the project, 
-making sure that Python version in the base environment is the same 
+It is recommended to prepare a virtual environment for the project,
+making sure that Python version in the base environment is the same
 as the one specified in the Dockerfile (`3.11` at the moment)
 
 ```bash
@@ -73,8 +73,8 @@ make install-requirements-dev
 to install the dependencies.
 
 #### NOTE
-On some platforms (e.g., macOS), installation of the dependencies fails as 
-no matching distribution may be found for the 
+On some platforms (e.g., macOS), installation of the dependencies fails as
+no matching distribution may be found for the
 `torch` library (due to the lack of `+cpu` in library name on that platform), e.g,
 ```
 ERROR: No matching distribution found for torch==2.3.0+cpu
@@ -110,8 +110,8 @@ Virtual environment has to be activated and all requirements should be installed
 
 ### Linter
 
-For this project, GitHub's CI pipline uses pre-commit hooks together with other checks 
-(`pyupgrade`, `flake8`, `isort`, and `black`) to ensure good formatting of files. 
+For this project, GitHub's CI pipline uses pre-commit hooks together with other checks
+(`pyupgrade`, `flake8`, `isort`, and `black`) to ensure good formatting of files.
 Before committing, make sure all checks pass by running
 ```bash
 make lint
