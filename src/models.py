@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 import torch
 
+
 def load_pickle(path, format="pickle"):
     with open(path, "rb") as f:
         if format == "dill":
@@ -92,7 +93,7 @@ class TRE(MLModel):
         model_path="src/models/treeEnsemble.pkl",
         metric_path="src/models/metrics/tre_metrics.pkl",
         residual_path="src/models/residuals/tre_residuals.pkl",
-        hist_range=[-40, 40],
+        hist_range=(-40, 40),
     ):
         super().__init__(model_path, metric_path, residual_path, hist_range)
         self.name = "Tree Ensemble"
@@ -105,7 +106,7 @@ class MLP(MLModel):
         model_path="src/models/multilayerPerceptron.pkl",
         metric_path="src/models/metrics/mlp_metrics.pkl",
         residual_path="src/models/residuals/mlp_residuals.pkl",
-        hist_range=[-40, 40],
+        hist_range=(-40, 40),
     ):
         super().__init__(model_path, metric_path, residual_path, hist_range)
         self.name = "Multilayer Perceptron"
@@ -164,7 +165,7 @@ class RLE(MLModel):
         model_path="src/models/regularizedLinearEnsemble.pkl",
         metric_path="src/models/metrics/rle_metrics.pkl",
         residual_path="src/models/residuals/rle_residuals.pkl",
-        hist_range=[-40, 40],
+        hist_range=(-40, 40),
     ):
         super().__init__(model_path, metric_path, residual_path, hist_range)
         self.name = "Regularized Linear Ensemble"
@@ -177,7 +178,7 @@ class SVE(MLModel):
         model_path="src/models/supportVectorEnsemble.pkl",
         metric_path="src/models/metrics/sve_metrics.pkl",
         residual_path="src/models/residuals/sve_residuals.pkl",
-        hist_range=[-40, 40],
+        hist_range=(-40, 40),
     ):
         super().__init__(model_path, metric_path, residual_path, hist_range)
         self.name = "Support Vector Ensemble"
@@ -277,7 +278,7 @@ class FVE:
         res_fve = residuals_df[0].copy()
         res_fve["Model"] = "FVE"
         res_fve["Speed residual"] = 0
-        for i, df in enumerate(residuals_df):
+        for i, _df in enumerate(residuals_df):
             residuals_df[i]["Model"] = model_full_names[i]
             res_fve["Speed residual"] += (
                 self.weights[model_abbr_names[i]] * residuals_df[i]["Speed residual"]
@@ -293,7 +294,7 @@ class FVE:
         pdf_fve = pdf_df[0].copy()
         pdf_fve["Model"] = "FVE"
         pdf_fve["Density"] = 0
-        for i, df in enumerate(pdf_df):
+        for i, _df in enumerate(pdf_df):
             pdf_df[i]["Model"] = model_full_names[i]
             pdf_fve["Density"] += (
                 self.weights[model_abbr_names[i]] * pdf_df[i]["Density"]

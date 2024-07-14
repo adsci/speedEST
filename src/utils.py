@@ -1,7 +1,8 @@
+import math
+from typing import Tuple
+
 import pandas as pd
 import streamlit as st
-from typing import Tuple
-import math
 
 LOGO_SIDEBAR_DARK = "src/img/logo/logo_small_dark.png"
 LOGO_SIDEBAR_LIGHT = "src/img/logo/logo_small_light.png"
@@ -10,21 +11,22 @@ LOGO_LIGHT = "src/img/logo/logo_large_light.png"
 LOGO_ICON_LIGHT = "src/img/logo/logo_icon_light.png"
 LOGO_ICON_DARK = "src/img/logo/logo_icon_dark.png"
 
+
 def v_spacer(height) -> None:
     for _ in range(height):
         st.write("\n")
 
 
 def read_version(path="VERSION"):
-    with open(path, "r") as f:
+    with open(path) as f:
         return f.read().strip()
 
 
-def get_segment_bounds(n_poles: int) -> Tuple[int,int]:
-    lower = math.ceil((n_poles-3)/2)
-    upper = math.floor((n_poles+3)/2)
+def get_segment_bounds(n_poles: int) -> Tuple[int, int]:
+    lower = math.ceil((n_poles - 3) / 2)
+    upper = math.floor((n_poles + 3) / 2)
 
-    return (max(0, lower),  upper)
+    return max(0, lower), upper
 
 
 def make_sidebar(theme="light"):
@@ -60,20 +62,20 @@ def print_welcome_info():
         __speedEST__ is an online app showcasing a data-driven approach
         to estimating vehicle speed at impact with a steel road barrier.
         The dashboard comprises a collection of machine learning models ready
-        for prediction. 
+        for prediction.
         """
     )
     v_spacer(2)
     st.info(
         """
-        To get a prediction, input the required parameters on the right 
+        To get a prediction, input the required parameters on the right
         and click on the "Estimate vehicle speed" button.
         """
     )
     v_spacer(2)
     st.warning(
         """
-        To get more information about the data, machine learning models and the project, 
+        To get more information about the data, machine learning models and the project,
         choose a page from the side menu.
         """
     )
@@ -93,6 +95,9 @@ def print_additional_info():
 
 
 def get_query() -> pd.DataFrame:
+    """
+    Reads user input and returns the corresponding model query
+    """
     st.subheader("Define impact parameters")
     vMass = st.slider(
         "Enter the mass of the vehicle, including the mass of occupants [kg]",
@@ -124,12 +129,30 @@ def get_query() -> pd.DataFrame:
         min_value=nSeg_lower,
         max_value=nSeg_upper,
         step=1,
-        value=int((nSeg_lower + nSeg_upper)/2),
+        value=int((nSeg_lower + nSeg_upper) / 2),
     )
 
-    feats = ["vehicleMass", "impactAngle", "finalDisp", "nPoles", "nSegments"]
-    query = pd.DataFrame([map(float, [vMass, iAng, fDisp, nP, nSeg])], columns=feats)
+    return preprocess_raw_input(vMass, iAng, fDisp, nP, nSeg)
 
+
+def preprocess_raw_input(
+    v_mass: float, i_ang: int, f_disp: float, n_posts: int, n_seg: int
+) -> pd.DataFrame:
+    """
+    Transforms user input into pandas DataFrame format, which is required by the models.
+
+    :param v_mass: Vehicle mass [kg]
+    :param i_ang: Impact angle [degrees]
+    :param f_disp: Final laterral displacement of the guardrail [mm]
+    :param n_posts: Number of damaged guardrail posts
+    :param n_seg: Number of dagamed guardrail segments
+
+    :return query: Query dataframe accepted by the models
+    """
+    feats = ["vehicleMass", "impactAngle", "finalDisp", "nPoles", "nSegments"]
+    query = pd.DataFrame(
+        [map(float, [v_mass, i_ang, f_disp, n_posts, n_seg])], columns=feats
+    )
     return query
 
 
