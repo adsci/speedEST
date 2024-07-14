@@ -19,5 +19,8 @@ requirements: clean
 	pip-compile requirements/dev.in --output-file requirements/dev.txt
 	pip-compile requirements/test.in --output-file requirements/test.txt
 
+set-app-version:
+	echo $(APP_VERSION) > VERSION
+
 test:
 	tox --skip-pkg-install
