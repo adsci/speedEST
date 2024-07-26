@@ -4,5 +4,5 @@
 		"dockerfile": "../Dockerfile",
 		"context": ".."
 	},
-	"appPort": 8501
+	"forwardPorts": [8501],
 }

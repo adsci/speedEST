@@ -19,13 +19,13 @@ and numerical simulations. The app consists of the following pages:
 # Usage
 
 ## Online
-The latest version app can is deployed [here](http://speedest.pl).
+The latest version of the app is always deployed [here](http://speedest.pl).
 
 ## Local
-For local use, production-ready docker images are available
-in the [DockerHub repository](https://hub.docker.com/r/adsci/speedest).
+For local use, production-ready docker images for amd64 and arm64 platforms 
+are available in the [DockerHub repository](https://hub.docker.com/r/adsci/speedest).
 To run it, first make sure that Docker is installed on your system.
-Then, pull the Docker image :
+Then, pull the Docker image
 
 ```bash
 docker pull adsci/speedest:latest
@@ -37,7 +37,7 @@ and run the container, with the necessary port mapping
 docker run -p 80:8501 adsci/speedest:latest
 ```
 
-After the container has started, the app can then be accessed at
+After the container has started, the app can accessed at
 [localhost](http://localhost).
 
 
@@ -45,11 +45,7 @@ After the container has started, the app can then be accessed at
 
 ## Building the Docker image
 
-Docker images present in the [DockerHub repository](https://hub.docker.com/r/adsci/speedest)
-support only the (`linux/amd64`) architecture, i.e.,
-most Linux and Windows machines.
-For other architectures, such as ARM (e.g., newer Apple machines),
-it may be necessary to build and run the image locally
+To build and run the image locally, use
 
 ```bash
 docker build -t speedest:latest -f Dockerfile .
@@ -106,7 +102,11 @@ make clean
 ```
 
 ## Continuous Integration
-Virtual environment has to be activated and all requirements should be installed.
+Before pushing a new commit to a branch, it's recommended to check locally whether
+all checks run by the CI pipeline pass. 
+To do that, make sure that the local environment is prepared 
+(see [here](#how-to-prepare-local-environment) for details).
+
 
 ### Linter
 
@@ -117,7 +117,7 @@ Before committing, make sure all checks pass by running
 make lint
 ```
 
-## Tester
+### Tester
 
 For this project, GitHub's CI pipline uses `tox`, which allows for running
 simultaneous tests on multiple environments. Locally, it's possible to run the
